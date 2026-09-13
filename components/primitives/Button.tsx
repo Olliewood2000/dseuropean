@@ -1,9 +1,9 @@
 import Link from "next/link";
-import type { ReactNode } from "react";
+import type { ButtonHTMLAttributes, ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 import { Icon } from "./Icon";
 
-export interface ButtonProps {
+export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children"> {
   variant?: "primary" | "secondary" | "ghost-dark" | "primary-dark";
   size?: "md" | "lg";
   href?: string;
@@ -11,7 +11,16 @@ export interface ButtonProps {
   children: ReactNode;
 }
 
-export function Button({ variant = "primary", size = "md", href, icon, children }: ButtonProps) {
+export function Button({
+  variant = "primary",
+  size = "md",
+  href,
+  icon,
+  children,
+  type = "button",
+  className: extraClassName = "",
+  ...buttonProps
+}: ButtonProps) {
   const className = `button button-${variant} button-${size}`;
   const content = (
     <>
@@ -26,7 +35,7 @@ export function Button({ variant = "primary", size = "md", href, icon, children 
       {content}
     </Link>
   ) : (
-    <button type="button" className={className}>
+    <button {...buttonProps} type={type} className={`${className} ${extraClassName}`}>
       {content}
     </button>
   );
