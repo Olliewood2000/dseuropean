@@ -2,6 +2,8 @@
 export const site = {
   name: "DS European",
   legalName: "DS European Ltd",
+  // Existing Home OG description, reused without writing new marketing copy.
+  positioning: "Specialist transport and on site installation across the UK, Europe and worldwide.",
   domain: "PLACEHOLDER_CANONICAL_DOMAIN",
   phone: "PLACEHOLDER_PHONE",
   phoneInternational: "PLACEHOLDER_PHONE_INTERNATIONAL",
