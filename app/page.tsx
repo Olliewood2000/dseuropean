@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-// Temporary Phase 1 review surface. Home is assembled after the component review.
+// Temporary component review. Home is assembled after Phase 2 approval.
 export default function Home() {
-  redirect("/dev/foundations");
+  redirect("/dev/components");
 }

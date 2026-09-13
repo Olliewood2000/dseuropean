@@ -221,3 +221,81 @@ Review Gate 1 against the deployed preview, especially the angled section rhythm
 Services menu, mobile drawer and footer. Approve or request changes before Phase 2 begins.
 Contact values, the private-deliveries decision and the earlier content questions remain
 open, as recorded above. They are not silently confirmed by the staging implementation.
+
+## Phase 2 review, 13 September 2026
+
+The user approved Phase 1 and instructed us to continue. PR #2 was merged into
+`staging/website`, producing `0826d71`. Phase 2 is isolated on `phase/2-components` and
+its PR targets staging. `main` remains untouched. No Gate 2 human check is marked passed.
+
+### Component library
+
+All primitives, the seventeen specified blocks and the six form components are present.
+The review at `/dev/components` contains 52 labelled sample sections, with light/dark
+versions and the named variants: button styles/sizes, image aspect ratios/masks, cards,
+three hero types, compact hero without CTAs, service grids, both split ratios/directions,
+text columns, process, trust/statistics, feature bands with/without items, audience/fleet,
+narrative/image job grids, coverage, FAQs, related services, both forms and contact/CTA.
+
+A separate `/dev/components/rhythm` composition has exactly three cut sections, avoiding
+the variant gallery's intentionally repeated-band rhythm. One H1 per review route;
+sample hero titles render as H2. Root now redirects to the component review. The original
+foundations page remains available. No actual Home or service page has been assembled.
+
+### Implementation decisions
+
+- Section owns background, spacing and cuts. Blocks accept optional Section settings so
+  future page documents can select their specified background and spacing without nesting
+  duplicate Sections. Existing required content props retain their meaning.
+- Hero CTA is optional for the quote-page exception; the Section override enables compact
+  spacing. Breadcrumbs are supplied explicitly. Preview hero heading level is configurable.
+- ImageFrame accepts static imports and sizes alongside string sources. Local SVG sizing
+  samples use Next's unoptimised SVG path; all fill-image calls supply sizes for future
+  raster assets. Next's AVIF/WebP output formats are configured.
+- ImagePlaceholder is a labelled image in the accessibility tree. Its grid reserves the
+  requested aspect ratio but grows for long briefs. Missing client photos remain written
+  briefs. The SVG geometry test is visibly identified as an image-sizing sample.
+- Image-mask inset is calculated from the documented 15-degree angle and nominal aspect
+  ratio. No bitmap editing or stock photography is used.
+- Cards keep all supplied excerpts rather than clipping them to three lines. Card titles
+  are semantic H3 with the H4 visual scale, respecting the no-skipped-level instruction.
+- ProcessSteps requires a tuple of three steps. JobGrid defaults to narrative. Forms and
+  supporting text stack in the documented order. Only the closing CTA centres body text;
+  the explicitly specified image-brief centring is retained.
+- Native FAQ disclosures work without a client component and emit escaped JSON-LD from
+  the same content. Sample FAQ text is fixture-only, not final service copy.
+- Forms use React Hook Form and Zod, on-blur validation, accessible label/error links and
+  unique IDs. Quote follows its authoritative page document: name, email, phone, collection,
+  destination and moving description required; optional detail starts closed. The compact
+  example proves default-service selection. Validation rejects punctuation-only phones.
+- Form submission is deliberately a local preview check, not a mocked successful enquiry.
+  Valid inputs display 'Preview checked. Nothing was sent.' The fields remain available,
+  and editing clears that status. Loading, error and both success designs have separate
+  labelled examples. Upload controls are visibly disabled. Phase 7 will implement actual
+  send behaviour, upload compression/HEIC handling, spam controls and success focus.
+- The ContactDetails map variant currently shows a labelled placeholder and an actual
+  address-based directions link. The map asset/configuration is still missing. No client
+  details, response-time promises, equipment ownership or job claims were invented.
+
+### Verification
+
+Production build, ESLint and standalone TypeScript checks pass. Browser inspection of
+390px, 768px and 1440px found no horizontal overflow or clipped photo-brief text after
+the layout fix. There is one H1 per route and no duplicate IDs. The card examples keep
+all excerpts; all seven icons are distinct (armchair, shop, presentation, building, cog,
+package check, gem), with an icon-free set provided for the user's decision.
+
+Verified the 7/5 and 5/7 image/text widths and media-first mobile order. TwoColumnText
+uses columns 1-4 and 6-12, and FormWithAside uses 1-7 and 9-12, with form first below lg.
+The quote forms each expose six required fields; disclosures are closed and the compact
+example selects Furniture. Invalid email and missing fields produce the supplied error
+text, focus the first invalid field on submit, and successful preview validation does
+not claim anything was sent. FAQ opens with Enter. Browser console returned no errors
+or warnings during the inspected interactions. Review routes remain noindex.
+
+### Human review still required
+
+Choose whether to keep the seven service-card icons, inspect light and inverse versions,
+check the photo briefs and the three-section rhythm, and approve or request changes.
+Phase 3 (the final Home page) starts only after that review. Earlier client decisions,
+photography and contact/integration settings remain outstanding.
