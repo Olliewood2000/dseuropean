@@ -373,3 +373,78 @@ Photographs, contact details, private deliveries and draft job/location publicat
 permissions remain client decisions. The staging draft does not assert those approvals.
 Quote/contact delivery remains Phase 7. Destination pages show the staging explanation
 and return to Home; this phase does not invent temporary marketing pages for them.
+
+## Phase 4 review, 13 September 2026
+
+The user approved the homepage with "keep going". PR #4 was merged into staging at
+`1acfde7`; Phase 4 is isolated on `phase/4-services`. Main remains at `6744b9e`. No Phase 4
+human gate is marked passed and no remaining service pages have been built.
+
+### Assembly and content contract
+
+Services hub: Hero page, ServiceGrid with seven supplied photo briefs, SplitFeature,
+ProcessSteps, TwoColumnText, FAQ, QuoteCTA. Seven sections, two cuts, backgrounds
+inverse/surface/subtle/surface/subtle/surface/inverse. Section 5 is compact; closing CTA
+is generous; other sections use standard padding. Its proposition and process copy are
+supplied specifically for the hub and differ from Home.
+
+Furniture: Hero service, SplitFeature 7/5, reversed SplitFeature 5/7, ProcessSteps,
+FeatureBand, CoverageList, TwoColumnText, FAQ, RelatedServices, QuoteCTA. Ten sections,
+three alternating cuts. Backgrounds and padding follow each section of the page doc.
+The related cards are Office Relocations, Exhibitions and Storage and Fulfilment.
+
+`ServicePage` requires all 13 top-level fields. The technical-spec field names are
+retained, with required coverage added. Fields use the existing typed block props so
+headings, CTAs, breadcrumbs, icons and section settings absent from the example contract
+are not lost. Process uses the existing three-step tuple; hero subtitle, image, primary
+CTA, breadcrumbs and settings are required; closing title/body/CTA are required.
+`featureBand` must be explicitly present or null. The route is the shared template;
+there is no new component. A typed registry derives its order from the existing service
+index and exposes only furniture to `generateStaticParams`, with dynamicParams false.
+
+### Copy and pending decisions
+
+- The five answered hub FAQs are rendered from the supplied copy. Its private-work FAQ
+  contains an instruction to choose an answer after client confirmation, rather than
+  an approved answer. The user was asked, with omission as the suggested interim choice.
+  Pending an answer, that one question is omitted from both visible FAQ and JSON-LD.
+  This does not decide whether private deliveries will be launched; the seven-card
+  staging draft is retained, as on Home.
+- Furniture keeps all six supplied answers and the literal `*(verify)*` marker on the
+  packaging-removal bullet. No claim sign-off is inferred from visual phase approval.
+- The hub's internal-link summary requests a body Storage link but supplies no matching
+  link/CTA in its seven detailed sections. Detailed section assembly is preserved;
+  Storage remains reachable through the shared header/footer. No CTA copy was invented.
+- Furniture's instruction that the first paragraph include the literal words "and
+  installation" differs from the supplied subtitle, which says "delivered and installed".
+  The supplied subtitle is retained verbatim, as are its title and H1.
+- Canonical/domain and Organization, Service and CollectionPage SEO are Phase 9. The
+  existing BreadcrumbList and FAQPage blocks emit schema now; breadcrumb item URLs
+  remain relative until preview/canonical origins are configured in that phase.
+
+### Verification evidence
+
+- Production build, ESLint and standalone TypeScript pass. Build output includes
+  `/services` and only `/services/furniture-transport` from generateStaticParams.
+- A virtual compiler test removed every one of 13 required fields in turn, plus the
+  nested hero subtitle. All 14 invalid shapes produced the expected type errors;
+  the valid contract compiled. No test dependency or scratch file entered the repo.
+- Compared 57 unique hub values and 82 furniture values with rendered HTML, including
+  photo accessible names and FAQ answers. No supplied value was missing. The unresolved
+  hub question and its drafting instruction were explicitly excluded from that check.
+- HTTP: both new routes return 200; an unbuilt service and an unknown slug return 404.
+- Browser: hub Furniture card opens the correct template, current breadcrumb has
+  aria-current and no link, Home and Services crumbs have the correct destinations.
+  Breadcrumb schemas have two/three entries; FAQ schemas match five/six visible answers.
+- Inspected full desktop pages and phone/tablet layouts at 1440, 390 and 768 pixels.
+  No horizontal overflow or clipped briefs; one H1 per page; hub has seven cards and
+  a ragged final row, with three/two/one columns. Split media stacks first below lg.
+- FAQ starts closed. Clicking opens it; Enter on the focused native summary toggles it.
+  Other component interactions and Home remain on their previously reviewed versions.
+- The fleet CTA points exactly to `/about#fleet`. Its destination does not exist until
+  Phase 6. Gate 4's destination/scroll-offset check therefore remains pending; no dummy
+  About page or false successful anchor test was added. Section's existing scroll offset
+  remains available for the actual About fleet section.
+
+Review the hub and furniture page before Phase 5. Real photography, client verification,
+contact channels, email submission and launch SEO remain in their scheduled phases.
