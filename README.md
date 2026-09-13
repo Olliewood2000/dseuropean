@@ -1,8 +1,8 @@
 # DS European staging
 
-The current review is **Phase 2: component library**, on `phase/2-components`, based on
-`staging/website`. The user approved Phase 1, which was merged into staging via PR #2.
-Phase 2 awaits review. No production release or merge to `main` is authorised.
+The current review is **Phase 3: Home**, on `phase/3-home`, based on `staging/website`.
+The user approved Phase 2, which was merged into staging via PR #3. Phase 3 awaits review.
+No production release or merge to `main` is authorised.
 
 Read `AGENTS.md`, the phase prompts and `docs/staging-review.md` before continuing.
 The original specification and final page copy remain unchanged.
@@ -16,21 +16,24 @@ npm ci
 npm run dev
 ```
 
-Open [the component review](http://localhost:3000/dev/components). Root redirects there
-until the real homepage is assembled in Phase 3. The review index links to 52 samples
+Open [the homepage](http://localhost:3000/). Its eleven sections use the supplied copy
+and photo briefs from `docs/pages/home.md`, with service icons retained provisionally.
+The [component review](http://localhost:3000/dev/components) still links to 52 samples
 covering every specified block, primitive and form, including light/dark treatments and
 named variants. The separate [rhythm sample](http://localhost:3000/dev/components/rhythm)
 contains exactly three cut sections for checking the composition at realistic length.
 The prior [foundations review](http://localhost:3000/dev/foundations) remains available.
 
-This is a labelled development gallery. Repeated heroes, FAQs, buttons and feature bands
-are deliberate variant samples, not a proposed production page. No final pages have been
-assembled. Future navigation links display a staging explanation and return link.
+The component gallery is separate from the homepage. Its repeated heroes, FAQs, buttons
+and feature bands are deliberate variant samples. Future navigation links display a
+staging explanation and a return link to Home until their scheduled phases are built.
 
 ## What needs review
 
-- Compare the seven service icons with the icon-free version and choose keep or remove.
-- Check image briefs, light/dark contrast, card sizes, text columns and form/aside stacking.
+- Review the homepage's eleven sections, three angled sections and seven service cards.
+- Check the photo briefs, text wrapping and section spacing on phone, tablet and desktop.
+- Service icons are kept for this review, following the user's instruction to continue;
+  an explicit keep/remove preference was not supplied. They can still be removed together.
 - Try FAQ keyboard controls and form validation. Quote has six required visible fields,
   with additional detail closed by default. Use sample data only.
 - Forms only validate locally. They do not send requests or save data. Sending, spam
@@ -54,4 +57,6 @@ npx tsc --noEmit
 
 Browser checks cover 390px, 768px and 1440px. Staging routes are `noindex, nofollow`.
 There is no sitemap yet; Phase 9 must exclude all `/dev/` routes. Automated checks and
-agent browser inspection do not replace the user's Phase 2 review.
+agent browser inspection do not replace the user's Phase 3 review. Home's local mobile
+Lighthouse performance score is 97, with zero measured layout shift. Full scores and
+the staging limitations are recorded in `docs/staging-review.md`.

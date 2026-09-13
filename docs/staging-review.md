@@ -299,3 +299,77 @@ Choose whether to keep the seven service-card icons, inspect light and inverse v
 check the photo briefs and the three-section rhythm, and approve or request changes.
 Phase 3 (the final Home page) starts only after that review. Earlier client decisions,
 photography and contact/integration settings remain outstanding.
+
+## Phase 3 review, 13 September 2026
+
+The user approved continuing with "good keep going" after viewing Phase 2. PR #3 was
+merged into staging at `f47566e`; Home is isolated on `phase/3-home`. Main remains at
+`6744b9e`. Service icons are retained provisionally as stated to the user, since no
+separate icon preference was supplied. No Phase 3 human gate is marked passed.
+
+### Page assembly
+
+| Order | Block | Content | Background | Padding | Cut |
+|---|---|---|---|---|---|
+| 1 | Hero, home | Delivered, installed, and finished. | inverse | generous | bottom |
+| 2 | TrustStrip | Four supplied figures | surface | compact | none |
+| 3 | ServiceGrid | Seven supplied services, three columns, icons, no images | subtle | standard | none |
+| 4 | SplitFeature | Installation, media left, 7/5 media/copy | surface | standard | none |
+| 5 | ProcessSteps | Three stages, one team | subtle | standard | none |
+| 6 | FeatureBand | Lake Como, Girona, France, Texas | inverse | generous | both |
+| 7 | AudienceGrid | Four audiences, copy only | surface | standard | none |
+| 8 | SplitFeature | Storage, media right, 5/7 media/copy | subtle | standard | none |
+| 9 | FleetStrip | Five vehicle types and supplied capacities | surface | compact | none |
+| 10 | JobGrid, narrative | Three supplied draft job narratives | subtle | standard | none |
+| 11 | QuoteCTA | Supplied closing copy and central phone placeholder | inverse | generous | top |
+
+Content lives in typed `content/home.ts`, `content/fleet.ts` and `content/jobs.ts`.
+The service grid uses the existing ordered service module. The page contains assembly
+and metadata only. No new component or project dependency was added. The supplied
+photo briefs remain markup placeholders; Hero already requests priority when real
+image data is supplied, while a markup placeholder has no image request to prioritise.
+
+The specified `Crane` glyph does not exist in the installed Lucide package. HIAB retains
+`Container`, the same provisional glyph shown in the approved component gallery; the
+supplied name and "Crane mounted" capacity are unchanged. No equipment ownership claim
+has been added. Job card title/service fields remain empty because this phase uses
+narratives and no separate titles/service copy were supplied.
+
+### Verification evidence
+
+- Production build, ESLint, standalone TypeScript and diff whitespace checks pass.
+- Compared 96 unique supplied copy values from the Home document with rendered HTML,
+  including the three image accessible names; none were missing or shortened.
+- Browser inspection at 390, 768 and 1440 pixels: no horizontal overflow, one H1,
+  no duplicate IDs, readable photo briefs, seven cards arranged 1/2/3 columns, with
+  a single card in the final desktop row. Split media stacks first on small screens.
+- Eleven sections have the specified order, backgrounds and padding. Exactly three
+  cut sections use the previously reviewed bottom/both/top alternating slopes.
+- Main-content links: seven individual services, About once, Storage once, recent jobs
+  three times, quote twice. The header provides the third quote CTA mentioned in the
+  document's summary; no extra content section or button was invented.
+- Local production Lighthouse, default mobile simulation: performance 97, accessibility
+  96, best practices 96, SEO 63. LCP 2.7 seconds, CLS 0, total blocking time 60 ms.
+  Performance meets this phase's 95 target; the Phase 10 LCP target is not yet met.
+  The audit tool ran outside the repository and added no application dependencies.
+- Accessibility flags only the three decorative process numbers, specified at 20%
+  opacity and already aria-hidden. Their styling is preserved for design review;
+  automated accessibility 100 is not claimed. Review this at Phase 10.
+- Best-practice console failures are automatic Next link prefetches to `/quote` and
+  `/recent-jobs`, which intentionally do not exist yet. These resolve when the scheduled
+  pages are built. SEO is reduced by intentional staging noindex. Neither score is
+  represented as a launch result or a completed Phase 10 audit.
+
+### Outstanding review and later work
+
+Review Home at `/` and approve or request changes before Phase 4 (Services hub and the
+furniture service template). The development galleries remain available at their URLs.
+The page has supplied title, description and Open Graph text, while retaining noindex,
+nofollow. The supplied 190-character description is preserved. Canonical/domain,
+Organization/LocalBusiness schema and generated sharing images remain Phase 9 work,
+with genuine contact details required before launch.
+
+Photographs, contact details, private deliveries and draft job/location publication
+permissions remain client decisions. The staging draft does not assert those approvals.
+Quote/contact delivery remains Phase 7. Destination pages show the staging explanation
+and return to Home; this phase does not invent temporary marketing pages for them.
