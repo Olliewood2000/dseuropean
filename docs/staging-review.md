@@ -158,3 +158,66 @@ component/page phases. Automated checks do not constitute human gate approval.
 - Original planning/page documents and supplied logo assets: unchanged.
 - Main and production: no changes pushed or merged.
 - Human phase gate: pending, not marked passed.
+
+## Phase 1 review, 13 September 2026
+
+### Authorisation and branch
+
+The user confirmed review after every phase and then instructed us to work through it.
+That is the authorisation to proceed from initial setup to Phase 1. No human Gate 1
+checkbox has been marked passed. Work is on `phase/1-chrome`, based on the approved
+staging setup at `687b633`. The Phase 1 PR targets `staging/website`, not `main`.
+No production release or merge to main is authorised.
+
+### Implemented
+
+- Section first, then Container, Header, MobileDrawer, StickyContactBar, Footer and
+  Breadcrumbs. Shared Button, Icon and footer MotifShape are the dependencies needed
+  by these specified chrome components. No Phase 2 blocks are built.
+- Completed missing semantic border, responsive type, section spacing and duration
+  tokens from the prose tables. Section owns the background, padding and cut depth.
+  Cut-both uses a combined polygon; light surfaces cannot be cut.
+- Fixed header with a permanent 88px layout reservation, transparent at rest and solid
+  at scroll positions greater than 80px, condensing to 68px without moving the content.
+- Services hub link separate from its menu control. Two-column dropdown with hover,
+  click, keyboard focus containment and Escape. Supplied descriptions wrap as needed
+  rather than being truncated to satisfy the contradictory one-line instruction.
+- Native modal mobile drawer, explicit Tab containment, Escape, focus restoration,
+  background scroll lock, inline services disclosure and route-change closure.
+- Quote button remains visible on mobile, following the sitemap's explicit requirement.
+  Phone and menu controls remain present. Unconfirmed phone/WhatsApp actions are disabled
+  and labelled; no invented contact values or placeholder URL destinations are created.
+- Mobile contact bar after 400px; footer reserves its full height plus the device safe area.
+- Footer positioning uses the existing Home OG description verbatim. Navigation labels
+  and descriptions use the supplied Home/sitemap copy, including its original casing.
+  Private Items is shown for staging review and remains an unresolved launch decision.
+- Breadcrumb navigation with escaped BreadcrumbList JSON-LD. Relative item URLs resolve
+  against the current origin while the canonical domain remains unconfirmed.
+- Temporary `/dev/foundations` review page, requested by the Phase 1 build prompt, with
+  all four background, padding and cut choices. Root temporarily redirects to it.
+  Fixture labels are review instructions, not replacement marketing copy. Final page
+  links are intentionally not implemented until their phases; the staging not-found
+  view explains this and links back to the review.
+- All staging pages remain noindex. No form backend, analytics or client tracking added.
+
+### Checks performed
+
+- Production build, ESLint and standalone TypeScript check pass with Node 22.
+- Browser review at 390px, 768px and 1440px; no horizontal overflow. Additional checks
+  at 320px and 1024px confirm the header also fits at those widths.
+- Desktop 88px transparent header becomes 68px navy at scroll; main document position
+  remains 88px. Section cut depths resolve to 32px, 56px and 80px at the required widths.
+- Verified dropdown Enter, Tab wrap and Escape; seven readable service links, without
+  truncation. Mobile modal traps Tab, restores focus on Escape, locks background scroll,
+  expands services and closes when a route is selected.
+- Skip link focuses the main landmark. Contact controls contain no placeholder links.
+  Mobile bar appears after scroll and legal footer links remain visible above it.
+- Montserrat resolves correctly; mobile heading scale resolves to the documented values.
+  Browser console check returned no warnings or errors during the reviewed interactions.
+
+### Human review still required
+
+Review Gate 1 against the deployed preview, especially the angled section rhythm, desktop
+Services menu, mobile drawer and footer. Approve or request changes before Phase 2 begins.
+Contact values, the private-deliveries decision and the earlier content questions remain
+open, as recorded above. They are not silently confirmed by the staging implementation.
