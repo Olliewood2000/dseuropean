@@ -1,49 +1,40 @@
 # DS European staging
 
-Review work lives on `staging/website`. Do not merge or push this work to `main` without
-an explicit release decision. This is currently phase 0 setup, so the starter homepage
-remains. The client website is built in the later phases.
+The current review is **Phase 1: foundations and chrome**, on `phase/1-chrome`, based on
+`staging/website`. The user confirmed that each phase is reviewed before the next starts.
+The Phase 1 pull request targets staging. Do not merge or push this work to `main` without
+an explicit release decision.
 
 Read `AGENTS.md`, the phase prompts and `docs/staging-review.md` before continuing.
 The original specification and page copy remain unchanged.
 
-## Getting Started
+## Local preview
 
-Use Node 22, install the locked packages with `npm ci`, then run the development server:
+Use Node 22 and the locked dependencies:
 
 ```bash
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [the foundations review](http://localhost:3000/dev/foundations). The root redirects
+there temporarily. This page exercises the shared chrome and Section variants; it is not
+the final homepage. Future page links currently display the staging not-found page with
+a return link. No Phase 2 blocks have been assembled.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Montserrat is loaded through `next/font/google`, at weights 400 and 700. Lucide is the
+only dependency added in Phase 1, as specified in the brief. Contact details remain in
+`content/site.ts`; `PLACEHOLDER_` values never become telephone, email or WhatsApp links.
+`.env.example` lists future integration settings. Keep secrets in ignored environment files.
 
-This project uses `next/font/google` to load Montserrat at weights 400 and 700. Brand CSS
-comes from the supplied document. Unknown client values in `content/site.ts` begin with
-`PLACEHOLDER_` and must not be used to construct links or treated as enabled decisions.
-`.env.example` lists future integration settings; keep actual secrets in ignored environment files.
+## Validation and review
 
-Before a review, run `npm run build`, `npm run lint` and `npx tsc --noEmit`. Human review
-gates remain separate from these automated checks. This staging branch is non-indexable.
+```bash
+npm run build
+npm run lint
+npx tsc --noEmit
+```
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Review the browser checklist at 390px, 768px and 1440px. Automated and agent browser checks
+do not replace human approval of Gate 1. Staging metadata remains `noindex, nofollow`.
+The production homepage is scheduled for Phase 3, after the Phase 2 component review.
