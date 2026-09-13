@@ -226,7 +226,9 @@ Supply good quality sources and let the optimiser do the compression. Do not com
 
 Never commit a source larger than the table above. A 6000px camera original in the repo slows every build and serves nobody.
 
-### Delivery
+### Logo assets
+
+`public/logo/` holds four SVG files: long and short format, each in white and dark variants. SVG is used throughout, since the logo renders at sizes from a footer mark to a full mobile drawer nav, and SVG holds up cleanly across that whole range.
 
 - `next/image` throughout, via the `ImageFrame` primitive. Never a bare `<img>`
 - `formats: ["image/avif", "image/webp"]` in `next.config`
