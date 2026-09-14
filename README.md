@@ -1,10 +1,20 @@
 # DS European staging
 
-Current review: **Phase 7, Quote and Contact**, on `phase/7-forms`, targeting
-`staging/website`. PR #7 was merged after the user requested the next phase.
+Current review: **Phase 8, Privacy, Cookies and Terms**, on `phase/8-legal`, targeting
+`staging/website`. PR #8 was merged after the user requested the next phase.
 Main remains unchanged. Earlier unanswered client decisions remain open.
 
 ## Review
+
+- `/privacy`, `/cookies` and `/terms`: supplied legal drafts, narrow prose,
+  highlighted unresolved details and working footer links. Last updated remains
+  a review-date placeholder. These are staging drafts awaiting client review.
+- Cookie and analytics statements need confirmation against the eventual setup.
+  Neither analytics nor application anti-spam cookies are currently enabled.
+- Terms cover website use only. Existing conditions of carriage must be supplied;
+  no carriage terms, registration numbers or retention periods were invented.
+
+Previous phase:
 
 - `/quote`: four sections, six required fields, optional detail disclosure,
   photograph attachments and the supplied reassurance aside.
@@ -42,5 +52,7 @@ request/file limits, provider failure and retry idempotency. Their email transpo
 is mocked; no real messages are sent. Build/lint/types and browser checks do not
 replace real inbox tests or the human Phase 7 gate.
 
-Both pages retain noindex/nofollow. Canonical SEO, analytics integration, legal
-pages and launch work remain in later phases. No Phase 8 work is included.
+All review pages retain noindex/nofollow under the user's staging-only instruction,
+including legal pages whose production brief calls for indexing. Production SEO,
+analytics integration and launch work remain in later phases. No Phase 9 work is
+included. See `docs/staging-review.md` for verification and outstanding decisions.

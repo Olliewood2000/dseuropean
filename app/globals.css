@@ -1,5 +1,27 @@
 @import "tailwindcss";
 
+/* Legal draft composition: plain surfaces and visibly unresolved fields. */
+body:has(.legal-page) .motif-shape {
+  display: none;
+}
+.legal-prose {
+  max-width: 68ch;
+  margin-inline: auto;
+  display: grid;
+  gap: calc(var(--spacing) * 10);
+}
+.legal-prose a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: calc(var(--spacing) * 1);
+}
+.legal-placeholder {
+  color: var(--color-warning);
+  background: var(--color-surface-subtle);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
 @theme {
   /* Brand */
   --color-blue-50: #eff5fe;
