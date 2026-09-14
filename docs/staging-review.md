@@ -683,3 +683,52 @@ expected content-module strings present respectively. The final schema version
 was rechecked in the browser: service CTA opens the preselected Furniture quote,
 six fields outside the closed disclosure, blur validation and enabled photo input
 inside the expanded optional section.
+
+## Phase 8 review, 14 September 2026
+
+The user requested continued building. PR #8 was merged into staging at `fdb656a`;
+legal page work is isolated on `phase/8-legal`. Main remains at `6744b9e`.
+This instruction does not resolve any outstanding client decisions or human gates.
+
+Privacy, Cookies and Terms use the supplied draft copy in `docs/pages/legal.md`,
+with shared company details resolved from `content/site.ts`. Missing registration,
+VAT, email, phone, retention, carriage and review-date values are visibly marked.
+The supplied example retention periods remain inside draft placeholder brackets;
+they are not confirmed policy. Terms cover website use and refer to separate
+conditions of carriage. No carriage terms have been drafted or assumed.
+
+The documented page composition uses the existing Hero, Section and QuoteCTA.
+Semantic prose is assembled in a route helper because the documentation specifies
+Prose but supplies no separate reusable component contract. Text has a 68ch maximum
+measure, h2 section headings, accent links and generous spacing. Scoped CSS hides
+decorative motifs on legal pages, including the shared footer, without changing
+other routes. The existing default QuoteCTA copy is reused.
+
+Legal pages retain noindex/nofollow under the explicit staging-only instruction.
+The legal brief's index/follow requirement applies to eventual production review;
+it has not been used to expose unfinished staging drafts to search engines.
+
+The cookie draft describes necessary cookies and cookieless analytics, but the
+current application uses neither analytics nor anti-spam cookies. Its supplied
+wording is preserved with visible analytics/configuration review placeholders.
+Privacy's analytics statement is also flagged. Client confirmation and wording
+reconciliation are still required before launch. Email provider confirmation, ICO
+registration, approved legal details and actual retention policy remain open.
+The last-updated date is deliberately not presented as a completed legal review.
+
+Verification:
+
+- Production build, ESLint and standalone TypeScript pass.
+- All three routes return HTTP 200 and staging robots metadata. Direct comparison
+  with the supplied document finds all 19 Privacy, 4 Cookies and 16 Terms content
+  lines after resolving shared values and normalising HTML whitespace.
+- Browser checks at 390, 768 and 1440px find one H1, three sections, two cuts,
+  no horizontal overflow, no unresolved template tokens and no visible motifs.
+- Full-page visual inspection covers Privacy desktop and Terms phone. Cookie
+  prose is readable at tablet size; its section dimensions were also inspected.
+- All three footer links and the cookie-to-privacy link navigate correctly.
+  Returning Home restores its ten decorative motifs.
+
+Gate 8 remains for human review. Earlier email delivery, map, device upload,
+private-customer, equipment ownership and Recent Jobs decisions remain pending.
+No Phase 9 work is included.

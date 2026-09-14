@@ -44,6 +44,7 @@ export const site = {
     jobRecordRetention: "PLACEHOLDER_JOB_RECORD_RETENTION_PERIOD",
     icoRegistration: "PLACEHOLDER_ICO_REGISTRATION",
     lastReviewed: "PLACEHOLDER_LEGAL_REVIEW_DATE",
+    cookieConfiguration: "PLACEHOLDER_COOKIE_CONFIGURATION_REVIEW",
   },
   warehouse: {
     address: "PLACEHOLDER_WAREHOUSE_ADDRESS",
