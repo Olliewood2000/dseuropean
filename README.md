@@ -1,9 +1,9 @@
 # DS European staging
 
-The current review is **Phase 5: remaining business service pages**, on
-`phase/5-services`, based on `staging/website`. The user approved Phase 4 and PR #5
-was merged into staging. Phase 5 awaits review and two client decisions. No merge
-into `main` is authorised.
+The current review is **Phase 6: Storage and About**, on `phase/6-company`, based
+on `staging/website`. The user approved continuing after the Phase 5 review and
+PR #6 was merged into staging. Unanswered client decisions remain open; no human
+gate is marked passed and no merge into `main` is authorised.
 
 Read `AGENTS.md`, the phase prompts and `docs/staging-review.md` before continuing.
 The original specification and page documents remain unchanged.
@@ -17,43 +17,40 @@ npm ci
 npm run dev
 ```
 
-Start with the [Services overview](http://localhost:3000/services) and follow the
-five newly working business cards:
-
-- [Retail Displays](http://localhost:3000/services/retail-display-transport)
-- [Exhibitions](http://localhost:3000/services/exhibition-transport)
-- [Office Relocations](http://localhost:3000/services/office-relocations)
-- [Equipment](http://localhost:3000/services/equipment-transport)
-- [Business Deliveries](http://localhost:3000/services/business-deliveries)
-
-[Furniture](http://localhost:3000/services/furniture-transport), the Services hub,
-[Home](http://localhost:3000/), [components](http://localhost:3000/dev/components)
-and [foundations](http://localhost:3000/dev/foundations) retain their earlier versions.
+- [Storage](http://localhost:3000/storage): seven sections, five answered FAQs,
+  project storage, consolidation, process and audiences.
+- [About](http://localhost:3000/about): eight sections, company and team copy,
+  four supplied figures, fleet and shared coverage.
+- [Fleet anchor](http://localhost:3000/about#fleet): now reachable from the
+  Furniture and Equipment service pages, clear of the fixed header.
+- [Services](http://localhost:3000/services) and [Home](http://localhost:3000/):
+  retain their reviewed versions. Development galleries remain available.
 
 ## What needs review
 
-Check each page's supplied headings, handling lists, image briefs, feature section,
-coverage, lead times, FAQs and related links on phone, tablet and desktop.
+Review Storage and About on desktop, tablet and phone. Photos remain supplied
+image briefs. Storage uses the specified text-only page hero; its conflicting
+hero image brief is preserved in content for a later agreed composition change.
+The H1 follows the explicit hero title rather than the differing metadata table.
 
-Private Items is not built or registered: its page document explicitly requires the
-client to confirm that private customers are accepted before building it. Existing
-seven-category navigation and grids remain a staging draft. The unresolved hub FAQ
-is still omitted. No client answer has been assumed.
+Recent Jobs is not built: its brief requires asking whether job locations may be
+published before building the page. That question is pending. Existing Home and
+coverage references remain staging drafts, not publication permission.
 
-Equipment's ownership FeatureBand is omitted until HIAB and Moffett ownership is
-confirmed. The remaining Equipment page has nine sections; the other business pages
-have ten. Supplied `*(verify)*` markers remain visible and claims still need client
-sign-off before launch. Contact values remain `PLACEHOLDER_` entries.
+Private Items remains unbuilt pending confirmation that private customers are
+accepted. Equipment's ownership section and About's ownership sentence remain
+omitted pending the HIAB/Moffett decision. Storage's unanswered location/security
+FAQ is omitted from the page and schema. No capacity, security or insurance claim
+has been added. Other supplied claims and team figures still need launch sign-off.
 
-The fleet link is `/about#fleet`; About and Storage are Phase 6. Forms are Phase 7.
-Unbuilt destinations show a staging explanation and return link. Do not begin the
-next phase before review and resolution of the outstanding phase decisions.
+Forms and email delivery remain Phase 7. Contact values remain `PLACEHOLDER_`
+entries. Unbuilt destinations return a staging explanation and a return link.
 
 ## Implementation and checks
 
-The five new content files use the existing `ServicePage` contract and shared
-coverage. The ordered registry now exposes six business routes. No component,
-template, style or dependency changed. Unknown and private service slugs return 404.
+Storage and About each have a typed content module and an assembled page, using
+existing blocks. Shared fleet data is reused; About preserves its supplied Moffett
+capacity wording. No component, CSS, dependency or earlier page changed.
 
 ```bash
 npm run build
@@ -61,14 +58,12 @@ npm run lint
 npx tsc --noEmit
 ```
 
-Build, lint and type checks pass. Rendered copy checks cover 478 supplied values
-across all six business pages, excluding only the pending ownership section, with
-none missing. All 36 FAQ questions and answers are distinct. Related links match
-the page documents and every business page links to Storage.
+Production build, lint and standalone type checks pass. Rendered copy checks cover
+126 expected values, with explicit exclusions for the pending ownership sentence,
+blocked Storage FAQ and non-rendered hero image brief. Browser checks at 390, 768
+and 1440 pixels found no overflow, clipped briefs or duplicate IDs. Fleet links
+from both service pages land below the condensed header.
 
-Browser checks cover all five new pages at 390px, 768px and 1440px, with no horizontal
-overflow, clipped briefs or duplicate IDs. Full verification notes and limitations
-are in `docs/staging-review.md`. These checks do not pass the human Phase 5 gate.
-
-Staging stays `noindex, nofollow`. Canonical URLs, absolute schema URLs and other
-SEO plumbing remain Phase 9.
+The Recent Jobs portion and full human Phase 6 gate remain pending. See
+`docs/staging-review.md` for exact evidence and exceptions. Staging remains
+`noindex, nofollow`; launch SEO and publication remain later phases.

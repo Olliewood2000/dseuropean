@@ -515,3 +515,77 @@ page decision is pending. Review the five new business pages and resolve the two
 client questions before completing this phase. About/fleet anchor, Storage, Recent
 Jobs, forms and launch SEO remain in their scheduled phases. No placeholder page
 has been invented to claim those destination checks pass.
+
+## Phase 6 review, 14 September 2026
+
+The user said "Keep going" after reviewing Phase 5's five business pages and its
+outstanding decisions. PR #6 was merged into staging at `d090c15`. Development is
+isolated on `phase/6-company`. This instruction authorises continuing the staging
+build; it is not an answer to any client question or a passed human gate. Main
+remains at `6744b9e`. Phase 7 has not started.
+
+### Assembly
+
+- Storage: Hero page, SplitFeature 7/5, reversed SplitFeature 5/7, ProcessSteps,
+  AudienceGrid, FAQ and QuoteCTA. Seven sections, two cuts. All detailed page
+  section backgrounds and padding are preserved. Five answered FAQs render.
+- About: Hero page, SplitFeature 7/5, StatBand, reversed SplitFeature 5/7,
+  FeatureBand, FleetStrip, CoverageList and QuoteCTA. Eight sections, three cuts.
+  Four supplied team figures appear in StatBand; no TrustStrip or ProcessSteps
+  was added to this page. Home retains its original TrustStrip.
+- Existing shared fleet entries and icons are reused. About overrides only the
+  Moffett capacity with its exact page-specific "Vehicle mounted forklift" text;
+  Home's "Forklift mounted" text remains unchanged. The approved Container icon
+  remains for HIAB because Lucide does not supply the specified Crane export.
+- FleetStrip's Section carries the stable `fleet` ID. Existing section CSS gives
+  it 84px scroll margin: the 68px condensed header plus 16px clearance. No CSS or
+  shared component change was required.
+- About imports shared coverage without changing its copy. Both pages use supplied
+  metadata and retain noindex/nofollow. Breadcrumb schema renders now; Service,
+  AboutPage and Organization schema remain Phase 9 with real organisation details.
+
+### Decisions and composition exceptions
+
+- Recent Jobs is unbuilt. Its page document says, "Before this page is built, ask
+  directly whether they can publish job locations." The user was asked whether
+  Lake Como, Girona, France and Texas may be named; no answer has arrived. Existing
+  Home and coverage references are staging draft content, not publication approval.
+  No new narrative page or anonymised substitute copy has been invented.
+- About's fleet intro retains its first supplied sentence and omits the second,
+  which asserts equipment ownership. Ownership remains unknown, not recorded as
+  hired. The Equipment page's ownership band remains omitted for the same reason.
+- Storage explicitly permits removing its unanswered location/security FAQ. That
+  question and its drafting instruction are absent from visible content and FAQ
+  schema. No capacity, security, insurance or bonded-status claims are introduced.
+- Storage's specified `page` Hero is text only in the component contract, although
+  its page doc includes an image brief. This pre-flight conflict remains visible
+  in the review record: preserve the specified variant and save the unused brief
+  in content. The two actual SplitFeature image slots show their supplied briefs.
+  No component was changed or extra block introduced to resolve this implicitly.
+- Storage's explicit hero title takes precedence over the conflicting metadata H1
+  entry, consistent with the pre-flight decision. Detailed page compositions take
+  precedence over the abbreviated component-library page summary.
+- Team figures and other supplied operational copy are staging drafts and require
+  client sign-off before launch. Private customers, equipment ownership, contact
+  details and job publication permissions remain unanswered.
+
+### Verification evidence
+
+- Production build, ESLint and standalone TypeScript pass. `/storage` and `/about`
+  return HTTP 200. `/recent-jobs` and private deliveries still return HTTP 404.
+- Rendered copy audit: 60 Storage values and 66 About values, all present. Excluded
+  only the non-rendered Storage hero brief, blocked FAQ and About ownership sentence.
+  Both breadcrumb schemas have two entries; Storage FAQ schema has five answers.
+- Both pages checked at 390, 768 and 1440 pixels: one H1, expected section/cut
+  counts, no horizontal overflow, clipped image briefs or duplicate IDs. Split
+  media stacks first below lg. Full-page visuals inspected for About on phone and
+  Storage on desktop. The long Storage FAQ opens on phone without overflow.
+- Clicked Equipment's fleet link at 390px and Furniture's at 1440px. Both reach
+  `/about#fleet`. Section top measures about 84px and header bottom 68px, leaving
+  the intended clearance; the fleet heading is visible below the header.
+- Only new page assemblies, their typed content and review documentation changed.
+  No new component, dependency, photograph, form handler or performance claim.
+
+Review Storage and About now. Full Phase 6 completion remains pending Recent Jobs
+location permission and human review. The private-client and equipment questions
+remain tracked separately; continuing the build did not resolve them.
