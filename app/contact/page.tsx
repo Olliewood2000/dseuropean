@@ -1,3 +1,6 @@
+import { JsonLd } from "@/components/JsonLd";
+import { webPageSchema } from "@/lib/structured-data";
+import { pageMetadata } from "@/lib/metadata";
 import type { Metadata } from "next";
 import { Phone, MessageCircle, Mail, MapPin } from "lucide-react";
 import { Hero } from "@/components/blocks/Hero";
@@ -10,14 +13,13 @@ import { contactMeta, contactPage } from "@/content/enquiry-pages";
 import { site } from "@/content/site";
 import { contactLinks, fullAddress, directionsLink } from "@/lib/contact";
 
-export const metadata: Metadata = {
-  title: { absolute: contactMeta.title },
-  description: contactMeta.description,
-  robots: { index: false, follow: false },
-};
+export const metadata: Metadata = pageMetadata("/contact");
 export default function ContactPage() {
   return (
     <>
+      <JsonLd
+        data={webPageSchema("ContactPage", "/contact", contactMeta.title, contactMeta.description)}
+      />
       <Hero {...contactPage.hero} />
       <ContactDetails
         layout="grid"

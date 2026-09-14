@@ -732,3 +732,83 @@ Verification:
 Gate 8 remains for human review. Earlier email delivery, map, device upload,
 private-customer, equipment ownership and Recent Jobs decisions remain pending.
 No Phase 9 work is included.
+
+## Phase 9 review, 14 September 2026
+
+The user requested continuation. PR #9 was merged into staging at `34512cc`;
+this phase is on `phase/9-seo`, targeting staging only. No client decision or
+human gate was inferred from the continuation instruction. No Phase 10 work.
+
+### Metadata and discovery
+
+All 15 implemented public routes use shared metadata assembled from existing
+content. Titles and descriptions are unchanged; Home retains its supplied OG
+wording. Canonical, Open Graph and Twitter metadata are absolute. Vercel Preview
+uses its own immutable deployment origin even when a production environment URL
+is supplied. Local builds use the configured local origin or 127.0.0.1:3000.
+
+Sitemap entries follow the implemented content registry, including registered
+services automatically. Recent Jobs and private deliveries remain excluded while
+unbuilt. Developer/API routes are excluded. No artificial last-modified dates.
+Robots disallows all staging crawling. Production indexing requires explicit
+enablement and a matching confirmed canonical origin, in addition to Production
+environment. Developer metadata remains noindex.
+
+The 140 to 158 character description target conflicts with 13 of the 15 currently
+built descriptions. Their lengths and the unresolved author decision are listed
+in `docs/seo-setup.md`. Domain redirects and old-site URL mapping still require
+the canonical-domain decision and old-site crawl. Next's slash redirect is 308.
+
+### Structured data and sharing
+
+Organization and LocalBusiness use supplied facts, with unknown phone/email
+omitted from schema. Service points to a stable Organization id. Services hub has
+CollectionPage and Contact has ContactPage. Breadcrumbs now use absolute URLs.
+FAQ schema still comes from the displayed FAQ items. All scripts use the one
+documented JsonLd helper, escaping less-than characters. No rating/review markup.
+
+Generated 1200 by 630 images use the supplied titles, navy/white/accent tokens,
+Montserrat Bold, short SVG logo and a motif bleeding right. The font and OFL
+licence are stored locally for server rendering. Next supplies actual metadata
+image paths, including legal route-group suffixes, to both social formats.
+
+### Analytics preparation
+
+The specified Vercel Analytics 2.0.1 and Speed Insights 2.0.0 packages are prepared
+but inactive. Activation requires Production environment, explicit enablement and
+the confirmed `vercel-cookieless` decision in site.ts. No Vercel project settings
+or plan were changed. The analytics question has not been answered.
+
+The optional subscriber handles the existing form success events and phone and
+WhatsApp links. Only event names are sent. Queries/fragments are stripped and
+unknown/external paths dropped before sending; no form values, filenames or
+contact destinations are included. Client success still includes the brief's
+silent spam-discard 200 responses, so it is not evidence of inbox delivery.
+Actual analytics, cookies, dashboard events and success-path browser tests remain
+pending authorised activation and the Phase 7 delivery prerequisites.
+
+### Verification and review limits
+
+- Production build, ESLint and standalone TypeScript pass.
+- Seven isolated scenarios pass: environment isolation, launch gates, content
+  registry coverage, provider references, tracking redaction and safe JSON-LD.
+- HTTP checks pass across all 15 public pages: unique supplied titles and
+  descriptions, absolute canonical and social URLs, staging robots, en-GB,
+  expected schema, matching FAQ counts, and generated PNG dimensions.
+- Every generated sharing PNG responds 200 at 1200 by 630, approximately 33 to
+  55 KB. Home and Furniture images were visually inspected. Font, logo and CSS
+  files are present in the service image function's deployment trace.
+- Sitemap exclusions, developer/404 noindex and the slash 308 redirect pass.
+- Browser checks confirm service and legal metadata, valid legal image suffixes,
+  no active analytics scripts, no service-page overflow and no console errors.
+- Google's Rich Results Test was run in code mode on the Furniture page's
+  actual generated schema. It reports three valid items: Breadcrumbs,
+  LocalBusiness and Organization. LocalBusiness has optional notes for
+  priceRange, telephone and image. No prices, numbers or photos were invented.
+  Result: https://search.google.com/test/rich-results/result?id=1WI31Q2GJSiuhkFc6vbJ9A
+  This validates the submitted local schema, not crawlability or a live domain.
+
+Gate 9 remains for human review. The canonical domain, description exceptions,
+active analytics, real conversion delivery and publicly fetchable sharing previews
+remain outstanding. Earlier content, contact, legal and photography decisions
+remain open. Main and production have not been changed.
