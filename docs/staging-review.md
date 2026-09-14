@@ -589,3 +589,97 @@ remains at `6744b9e`. Phase 7 has not started.
 Review Storage and About now. Full Phase 6 completion remains pending Recent Jobs
 location permission and human review. The private-client and equipment questions
 remain tracked separately; continuing the build did not resolve them.
+
+## Phase 7 review, 14 September 2026
+
+The user explicitly requested the next phase. PR #7 was merged into staging at
+`4c56e35`; forms work is isolated on `phase/7-forms`. Main stays at `6744b9e`.
+The instruction authorises further staging work but does not resolve the pending
+private-client, ownership or Recent Jobs publication questions. No Phase 8 work.
+
+### Pages and interaction
+
+Quote uses the supplied four blocks: compact page Hero without buttons,
+FormWithAside, TrustStrip and ContactDetails without a map. Its explicit hero H1
+wins over the differing metadata-table H1. Contact uses the five detailed blocks,
+with four contact methods and a static-map slot. All contact values and directions
+come from shared site data. Supplied M20/timing copy remains subject to verification.
+
+The form components now support a sending mode; gallery instances remain preview
+only by default. Quote keeps six required fields, optional details closed initially,
+and service selection passed from service-page CTAs. The Quote page is rendered on
+request to read the service query parameter; it retains a server-rendered shell.
+Contact remains static. Both have supplied metadata and noindex/nofollow.
+
+Both forms validate on blur using the same complete Zod schema as the handlers.
+Submission displays Sending, disables the button, then replaces the form on success
+or preserves inputs on failure. The success heading is focusable and the hook moves
+focus to it. An enquiry-success event is available for Phase 9 analytics without
+including personal data. No analytics service was introduced in this phase.
+
+### Delivery and uploads
+
+POST handlers accept multipart requests carrying JSON fields and binary photos.
+JSON without files is also accepted. This resolves the pre-flight size conflict:
+base64 in client JSON would exceed the host cap before 4 MB of photos could arrive.
+Complete requests are capped at 4.1 MB; photos at 4 MB, three files. Contact accepts
+no attachments. File signatures and MIME agreement are checked server side, and
+attachments receive safe filenames. No file store or new dependency is introduced.
+
+Decoded images are resized on the client to a 1920px longest edge and JPEG quality
+0.8. On browsers without HEIC decoding, original HEIC files remain attachable within
+the total cap. This is a provisional fallback, not universal HEIC compression. The
+user was asked to choose between keeping this fallback and allowing an extra HEIC
+decoder contrary to the dependency restriction. No answer has arrived. Raw source
+files above 20 MB are rejected before decoding. Real-device photo tests remain open.
+
+Honeypot and under-three-second submissions return 200 without email. The timestamp
+is a spam signal, not proof of a human, and can be forged. This also retains the
+brief's known risk that a very fast legitimate submission is silently discarded.
+Cross-origin browser requests are rejected. Vercel WAF is a separate configuration
+requirement; its rate limits have not been verified or represented as implemented.
+
+The Resend HTTP integration sends a plain notification with the enquirer as reply-to
+and a confirmation to the enquirer. Quote subjects include service and route. Empty
+optional fields say Not supplied. Each email uses a separate deterministic
+idempotency key for retrying the same submission; provider failure returns 502.
+Delivery requires an explicit enabled flag plus valid sender, recipient and API key.
+Absent settings return 503, not success. No real emails were sent in this phase.
+
+A Google Maps Static API image is configured from the existing public map-key setting,
+with encoded address/marker, explicit dimensions and lazy loading. Without a key,
+the existing map placeholder and real directions link render. Map imagery and marker
+accuracy cannot be verified until the API is configured. No iframe is used.
+
+### Verification and outstanding gate
+
+- Production build, ESLint and standalone TypeScript pass.
+- Thirteen isolated route-test scenarios pass: both email flows, invalid input,
+  spam timing/honeypot, missing metadata, origin checks, malformed/large requests,
+  missing configuration, provider error, stable retry keys after partial failure,
+  JPEG/HEIC signature handling, spoofed types, count and total-byte limits.
+  Transport is mocked in the test process. The HEIC fixture checks signature
+  handling, not a real photograph or browser decoding.
+- Browser checks at 390, 768 and 1440 pixels: expected four/five sections and one/two
+  cuts, one H1, no horizontal overflow or duplicate IDs, form first when stacked.
+  Full-page visual inspection covered Quote desktop and Contact phone.
+- Invalid email shows no message while typing, then the supplied error on blur,
+  linked by aria-describedby. A configured-service query preselects Furniture.
+  Quote disclosure starts closed and visibly presents six required fields.
+- Local submissions with email disabled show the supplied failure state without
+  navigation. Quote screenshot confirms name, email, phone, both locations and
+  description remain visible after failure. No delivery-success claim was inferred.
+- Client success replacement/focus is implemented but still needs an authorised
+  real-delivery browser test. Both actual inbox arrivals, SPF/DKIM, WAF, static map
+  and real device uploads remain required before completing Gate 7.
+
+The user has been asked for the approved inbox, primary phone and WhatsApp number.
+No contact details or email-domain settings were guessed. `docs/enquiry-setup.md`
+records the concrete configuration and acceptance steps. Review the page layouts
+now; do not mark this phase fully passed or publish the forms as operational.
+
+Final HTTP/copy check: `/quote` and `/contact` return 200, with all 22 and 16
+expected content-module strings present respectively. The final schema version
+was rechecked in the browser: service CTA opens the preselected Furniture quote,
+six fields outside the closed disclosure, blur validation and enabled photo input
+inside the expanded optional section.

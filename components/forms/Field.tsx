@@ -1,7 +1,8 @@
-import type { InputHTMLAttributes } from "react";
+import type { InputHTMLAttributes, Ref } from "react";
 import { CircleAlert } from "lucide-react";
 import { Icon } from "@/components/primitives/Icon";
 export interface FieldProps extends InputHTMLAttributes<HTMLInputElement> {
+  ref?: Ref<HTMLInputElement>;
   id: string;
   label: string;
   hint?: string;
