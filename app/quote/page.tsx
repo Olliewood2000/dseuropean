@@ -1,18 +1,15 @@
+import { pageMetadata } from "@/lib/metadata";
 import type { Metadata } from "next";
 import { Hero } from "@/components/blocks/Hero";
 import { FormWithAside } from "@/components/blocks/FormWithAside";
 import { TrustStrip } from "@/components/blocks/TrustStrip";
 import { ContactDetails } from "@/components/blocks/ContactDetails";
-import { quoteMeta, quotePage } from "@/content/enquiry-pages";
+import { quotePage } from "@/content/enquiry-pages";
 import { site } from "@/content/site";
 import { services } from "@/content/services";
 import { contactLinks } from "@/lib/contact";
 
-export const metadata: Metadata = {
-  title: { absolute: quoteMeta.title },
-  description: quoteMeta.description,
-  robots: { index: false, follow: false },
-};
+export const metadata: Metadata = pageMetadata("/quote");
 export default async function QuotePage({ searchParams }: PageProps<"/quote">) {
   const query = await searchParams;
   const defaultService = services.find((s) => s.slug === query.service)?.slug ?? "";

@@ -1,3 +1,4 @@
+import { JsonLd } from "@/components/JsonLd";
 import { ChevronDown } from "lucide-react";
 import { Section } from "@/components/layout/Section";
 import { Icon } from "@/components/primitives/Icon";
@@ -37,10 +38,7 @@ export function FAQ({ heading, items, tone, section }: FAQProps) {
             </details>
           ))}
         </div>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, "\\u003c") }}
-        />
+        <JsonLd data={schema} />
       </div>
     </Section>
   );

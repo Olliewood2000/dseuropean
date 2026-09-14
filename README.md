@@ -1,10 +1,21 @@
 # DS European staging
 
-Current review: **Phase 8, Privacy, Cookies and Terms**, on `phase/8-legal`, targeting
-`staging/website`. PR #8 was merged after the user requested the next phase.
+Current review: **Phase 9, SEO and sharing previews**, on `phase/9-seo`, targeting
+`staging/website`. PR #9 was merged after the user requested the next phase.
 Main remains unchanged. Earlier unanswered client decisions remain open.
 
 ## Review
+
+- Every built page now has absolute canonical and social metadata, structured
+  data, and a branded 1200 by 630 sharing image using the supplied title and logo.
+- `/sitemap.xml` lists the 15 implemented public pages. `/robots.txt` blocks
+  staging crawling. Indexing and analytics remain disabled by default.
+- The two documented Vercel analytics packages are prepared behind explicit
+  production/client-decision gates. Domain choice, live analytics approval,
+  description-length exceptions and public sharing tests remain outstanding.
+- See `docs/seo-setup.md` for configuration, verification and remaining decisions.
+
+Earlier review pages:
 
 - `/privacy`, `/cookies` and `/terms`: supplied legal drafts, narrow prose,
   highlighted unresolved details and working footer links. Last updated remains
@@ -13,8 +24,6 @@ Main remains unchanged. Earlier unanswered client decisions remain open.
   Neither analytics nor application anti-spam cookies are currently enabled.
 - Terms cover website use only. Existing conditions of carriage must be supplied;
   no carriage terms, registration numbers or retention periods were invented.
-
-Previous phase:
 
 - `/quote`: four sections, six required fields, optional detail disclosure,
   photograph attachments and the supplied reassurance aside.
@@ -45,6 +54,9 @@ npm run build
 npm run lint
 npx tsc --noEmit
 node tests/enquiries.cjs
+node tests/seo.cjs
+# With npm run start running separately:
+node tests/seo.cjs --http
 ```
 
 The isolated route tests cover both notification paths, validation, spam controls,
@@ -53,6 +65,7 @@ is mocked; no real messages are sent. Build/lint/types and browser checks do not
 replace real inbox tests or the human Phase 7 gate.
 
 All review pages retain noindex/nofollow under the user's staging-only instruction,
-including legal pages whose production brief calls for indexing. Production SEO,
-analytics integration and launch work remain in later phases. No Phase 9 work is
-included. See `docs/staging-review.md` for verification and outstanding decisions.
+including legal pages whose production brief calls for indexing. Live-domain
+redirects, active analytics, performance/accessibility acceptance and launch work
+remain pending. No Phase 10 work is included. See `docs/staging-review.md` for
+verification and outstanding decisions.

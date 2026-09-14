@@ -1,3 +1,5 @@
+import { absoluteUrl } from "@/lib/site-origin";
+import { JsonLd } from "@/components/JsonLd";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { Icon } from "@/components/primitives/Icon";
@@ -16,7 +18,7 @@ export function Breadcrumbs({ items, tone = "light" }: BreadcrumbsProps) {
       "@type": "ListItem",
       position: index + 1,
       name: item.label,
-      ...(index < items.length - 1 && item.href ? { item: item.href } : {}),
+      ...(index < items.length - 1 && item.href ? { item: absoluteUrl(item.href) } : {}),
     })),
   };
   return (
@@ -48,10 +50,7 @@ export function Breadcrumbs({ items, tone = "light" }: BreadcrumbsProps) {
           ))}
         </ol>
       </nav>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, "\\u003c") }}
-      />
+      <JsonLd data={schema} />
     </>
   );
 }

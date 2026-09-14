@@ -1,3 +1,4 @@
+import { pageMetadata } from "@/lib/metadata";
 import type { Metadata } from "next";
 import { Hero } from "@/components/blocks/Hero";
 import { TrustStrip } from "@/components/blocks/TrustStrip";
@@ -9,20 +10,9 @@ import { AudienceGrid } from "@/components/blocks/AudienceGrid";
 import { FleetStrip } from "@/components/blocks/FleetStrip";
 import { JobGrid } from "@/components/blocks/JobGrid";
 import { QuoteCTA } from "@/components/blocks/QuoteCTA";
-import { home, homeMeta } from "@/content/home";
+import { home } from "@/content/home";
 
-export const metadata: Metadata = {
-  title: { absolute: homeMeta.title },
-  description: homeMeta.description,
-  robots: { index: false, follow: false },
-  openGraph: {
-    type: "website",
-    locale: "en_GB",
-    siteName: "DS European",
-    title: homeMeta.ogTitle,
-    description: homeMeta.ogDescription,
-  },
-};
+export const metadata: Metadata = pageMetadata("/");
 
 export default function HomePage() {
   return (

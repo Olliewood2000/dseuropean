@@ -1,3 +1,6 @@
+import { pageMetadata } from "@/lib/metadata";
+import { JsonLd } from "@/components/JsonLd";
+import { serviceSchema } from "@/lib/structured-data";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Hero } from "@/components/blocks/Hero";
@@ -23,11 +26,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const service = getServicePage(slug);
   if (!service) notFound();
-  return {
-    title: { absolute: service.meta.title },
-    description: service.meta.description,
-    robots: { index: false, follow: false },
-  };
+  return pageMetadata(`/services/${slug}`);
 }
 
 export default async function ServicePageRoute({ params }: PageProps<"/services/[slug]">) {
@@ -40,6 +39,9 @@ export default async function ServicePageRoute({ params }: PageProps<"/services/
     cta.href === "/quote" ? { ...cta, href: quoteHref } : cta;
   return (
     <>
+      <JsonLd
+        data={serviceSchema(`/services/${slug}`, service.hero.title, service.meta.description)}
+      />
       <Hero {...service.hero} primaryCta={withService(service.hero.primaryCta)} />
       <SplitFeature {...service.whatWeMove} />
       <SplitFeature {...service.handling} />

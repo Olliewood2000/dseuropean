@@ -52,7 +52,7 @@ export function useEnquiry(kind: "quote" | "contact", preview: boolean) {
         throw new Error();
       }
       setStatus("success");
-      // Phase 9 may subscribe once the analytics choice is confirmed.
+      // The optional analytics subscriber receives no enquiry details.
       window.dispatchEvent(new CustomEvent("enquiry-success", { detail: { form: kind } }));
     } catch {
       setStatus("error");
