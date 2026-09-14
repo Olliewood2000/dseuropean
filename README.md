@@ -1,69 +1,46 @@
 # DS European staging
 
-The current review is **Phase 6: Storage and About**, on `phase/6-company`, based
-on `staging/website`. The user approved continuing after the Phase 5 review and
-PR #6 was merged into staging. Unanswered client decisions remain open; no human
-gate is marked passed and no merge into `main` is authorised.
+Current review: **Phase 7, Quote and Contact**, on `phase/7-forms`, targeting
+`staging/website`. PR #7 was merged after the user requested the next phase.
+Main remains unchanged. Earlier unanswered client decisions remain open.
 
-Read `AGENTS.md`, the phase prompts and `docs/staging-review.md` before continuing.
-The original specification and page documents remain unchanged.
+## Review
 
-## Local review
+- `/quote`: four sections, six required fields, optional detail disclosure,
+  photograph attachments and the supplied reassurance aside.
+- `/contact`: five sections, four contact methods, message form, directions and
+  a static-map slot. Real contact values remain placeholders.
+- Service-page quote buttons now carry the selected service into `/quote`.
+- `/dev/components` keeps non-sending gallery forms by default.
 
-Use Node 22 and the locked packages:
+The forms are connected to their route handlers. **Live email delivery is disabled**
+until the approved inbox, sender/domain credentials and test window are supplied.
+An attempted real submission currently shows the supplied failure message and
+keeps the fields. It does not pretend that an enquiry reached the company.
+
+See `docs/enquiry-setup.md` for environment variables and the remaining checks:
+real email arrival, SPF/DKIM, WAF configuration, map settings and device photo tests.
+HEIC originals can attach within the cap when the browser cannot decode them;
+universal HEIC resizing needs an approved extra decoder and remains pending.
+Recent Jobs, private customers and equipment ownership are still client decisions.
+
+## Run and verify
+
+Use Node 22 and locked dependencies:
 
 ```bash
 npm ci
 npm run dev
-```
-
-- [Storage](http://localhost:3000/storage): seven sections, five answered FAQs,
-  project storage, consolidation, process and audiences.
-- [About](http://localhost:3000/about): eight sections, company and team copy,
-  four supplied figures, fleet and shared coverage.
-- [Fleet anchor](http://localhost:3000/about#fleet): now reachable from the
-  Furniture and Equipment service pages, clear of the fixed header.
-- [Services](http://localhost:3000/services) and [Home](http://localhost:3000/):
-  retain their reviewed versions. Development galleries remain available.
-
-## What needs review
-
-Review Storage and About on desktop, tablet and phone. Photos remain supplied
-image briefs. Storage uses the specified text-only page hero; its conflicting
-hero image brief is preserved in content for a later agreed composition change.
-The H1 follows the explicit hero title rather than the differing metadata table.
-
-Recent Jobs is not built: its brief requires asking whether job locations may be
-published before building the page. That question is pending. Existing Home and
-coverage references remain staging drafts, not publication permission.
-
-Private Items remains unbuilt pending confirmation that private customers are
-accepted. Equipment's ownership section and About's ownership sentence remain
-omitted pending the HIAB/Moffett decision. Storage's unanswered location/security
-FAQ is omitted from the page and schema. No capacity, security or insurance claim
-has been added. Other supplied claims and team figures still need launch sign-off.
-
-Forms and email delivery remain Phase 7. Contact values remain `PLACEHOLDER_`
-entries. Unbuilt destinations return a staging explanation and a return link.
-
-## Implementation and checks
-
-Storage and About each have a typed content module and an assembled page, using
-existing blocks. Shared fleet data is reused; About preserves its supplied Moffett
-capacity wording. No component, CSS, dependency or earlier page changed.
-
-```bash
 npm run build
 npm run lint
 npx tsc --noEmit
+node tests/enquiries.cjs
 ```
 
-Production build, lint and standalone type checks pass. Rendered copy checks cover
-126 expected values, with explicit exclusions for the pending ownership sentence,
-blocked Storage FAQ and non-rendered hero image brief. Browser checks at 390, 768
-and 1440 pixels found no overflow, clipped briefs or duplicate IDs. Fleet links
-from both service pages land below the condensed header.
+The isolated route tests cover both notification paths, validation, spam controls,
+request/file limits, provider failure and retry idempotency. Their email transport
+is mocked; no real messages are sent. Build/lint/types and browser checks do not
+replace real inbox tests or the human Phase 7 gate.
 
-The Recent Jobs portion and full human Phase 6 gate remain pending. See
-`docs/staging-review.md` for exact evidence and exceptions. Staging remains
-`noindex, nofollow`; launch SEO and publication remain later phases.
+Both pages retain noindex/nofollow. Canonical SEO, analytics integration, legal
+pages and launch work remain in later phases. No Phase 8 work is included.

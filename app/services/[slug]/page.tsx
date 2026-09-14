@@ -35,18 +35,29 @@ export default async function ServicePageRoute({ params }: PageProps<"/services/
   const service = getServicePage(slug);
   if (!service) notFound();
 
+  const quoteHref = `/quote?service=${encodeURIComponent(slug)}`;
+  const withService = <T extends { label: string; href: string }>(cta: T): T =>
+    cta.href === "/quote" ? { ...cta, href: quoteHref } : cta;
   return (
     <>
-      <Hero {...service.hero} />
+      <Hero {...service.hero} primaryCta={withService(service.hero.primaryCta)} />
       <SplitFeature {...service.whatWeMove} />
       <SplitFeature {...service.handling} />
       <ProcessSteps {...service.process} />
-      {service.featureBand && <FeatureBand {...service.featureBand} />}
+      {service.featureBand && (
+        <FeatureBand
+          {...service.featureBand}
+          cta={service.featureBand.cta ? withService(service.featureBand.cta) : undefined}
+        />
+      )}
       <CoverageList {...service.coverage} />
-      <TwoColumnText {...service.leadTimes} />
+      <TwoColumnText
+        {...service.leadTimes}
+        cta={service.leadTimes.cta ? withService(service.leadTimes.cta) : undefined}
+      />
       <FAQ {...service.faqs} />
       <RelatedServices {...service.related} />
-      <QuoteCTA {...service.quoteCta} />
+      <QuoteCTA {...service.quoteCta} primaryCta={withService(service.quoteCta.primaryCta)} />
     </>
   );
 }

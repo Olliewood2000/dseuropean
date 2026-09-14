@@ -1,9 +1,12 @@
 "use client";
-import { useId, useState } from "react";
+import { useId } from "react";
 import { useForm } from "react-hook-form";
+import { useEnquiry } from "@/lib/use-enquiry";
+import type { QuoteValues } from "@/lib/enquiry-schema";
 import { ChevronDown } from "lucide-react";
 import { services } from "@/content/services";
-import { validateWith, validators } from "@/lib/form-validation";
+import { schemaResolver } from "@/lib/form-validation";
+import { quoteSchema } from "@/lib/enquiry-schema";
 import type { Tone } from "@/lib/blocks";
 import { Icon } from "@/components/primitives/Icon";
 import { Button } from "@/components/primitives/Button";
@@ -11,59 +14,69 @@ import { Field } from "./Field";
 import { Textarea } from "./Textarea";
 import { Select } from "./Select";
 import { FormMessage } from "./FormMessage";
-interface QuoteValues {
-  name: string;
-  email: string;
-  phone: string;
-  from: string;
-  to: string;
-  moving: string;
-  service: string;
-  when: string;
-  installation: boolean;
-}
 export interface QuoteFormProps {
   compact?: boolean;
   defaultService?: string;
   tone?: Tone;
+  preview?: boolean;
 }
 export function QuoteForm({
+  preview = true,
   compact = false,
   defaultService = "",
   tone = "light",
 }: QuoteFormProps) {
   const id = useId();
-  const [previewChecked, setPreviewChecked] = useState(false);
+  const { status, photoError, startField, honeypot, fileField, result, submit } = useEnquiry(
+    "quote",
+    preview,
+  );
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<QuoteValues>({
+    resolver: schemaResolver(quoteSchema),
     mode: "onBlur",
     reValidateMode: "onBlur",
     defaultValues: { service: defaultService },
   });
+  if (status === "success")
+    return (
+      <div ref={result}>
+        <FormMessage variant="success" form="quote" />
+      </div>
+    );
   return (
     <form
       noValidate
-      aria-label="Quote form preview"
-      onChange={() => setPreviewChecked(false)}
+      aria-label={preview ? "Quote form preview" : "Quote form"}
       className={`form-layout ${compact ? "form-compact" : ""}`}
-      onSubmit={handleSubmit(
-        () => setPreviewChecked(true),
-        () => setPreviewChecked(false),
-      )}
+      onSubmit={handleSubmit((values) => submit(values))}
     >
-      <p className="block-muted text-body-sm">
-        Form preview only. Nothing entered here is sent or saved.
-      </p>
+      {preview && (
+        <p className="block-muted text-body-sm">
+          Form preview only. Nothing entered here is sent or saved.
+        </p>
+      )}
+      <input type="hidden" name="startedAt" ref={startField} />
+      <div hidden>
+        <label htmlFor={`${id}-website`}>Company website</label>
+        <input
+          id={`${id}-website`}
+          name="company_website"
+          tabIndex={-1}
+          autoComplete="off"
+          ref={honeypot}
+        />
+      </div>
       <div className="form-fields">
         <Field
           id={`${id}-name`}
           label="Name"
           autoComplete="name"
           required
-          {...register("name", { validate: validateWith(validators.required) })}
+          {...register("name")}
           error={errors.name?.message}
         />
         <Field
@@ -72,7 +85,7 @@ export function QuoteForm({
           type="email"
           autoComplete="email"
           required
-          {...register("email", { validate: validateWith(validators.email) })}
+          {...register("email")}
           error={errors.email?.message}
         />
         <Field
@@ -81,7 +94,7 @@ export function QuoteForm({
           type="tel"
           autoComplete="tel"
           required
-          {...register("phone", { validate: validateWith(validators.phone) })}
+          {...register("phone")}
           error={errors.phone?.message}
         />
         <Field
@@ -89,7 +102,7 @@ export function QuoteForm({
           label="Collecting from"
           hint="Town or postcode is enough"
           required
-          {...register("from", { validate: validateWith(validators.required) })}
+          {...register("from")}
           error={errors.from?.message}
         />
         <Field
@@ -97,7 +110,7 @@ export function QuoteForm({
           label="Delivering to"
           hint="Town or postcode is enough"
           required
-          {...register("to", { validate: validateWith(validators.required) })}
+          {...register("to")}
           error={errors.to?.message}
         />
         <Textarea
@@ -106,7 +119,7 @@ export function QuoteForm({
           rows={3}
           placeholder="A dining table and six chairs, roughly 2.4m long"
           required
-          {...register("moving", { validate: validateWith(validators.message) })}
+          {...register("moving")}
           error={errors.moving?.message}
         />
       </div>
@@ -125,7 +138,13 @@ export function QuoteForm({
               ...services.map((service) => ({ label: service.title, value: service.slug })),
             ]}
           />
-          <Field id={`${id}-when`} label="When do you need it" {...register("when")} />
+          <Field
+            id={`${id}-when`}
+            label="When do you need it"
+            error={errors.when?.message}
+            maxLength={200}
+            {...register("when")}
+          />
           <label className="flex items-start gap-3">
             <input type="checkbox" className="form-checkbox" {...register("installation")} />
             Installation or set up required
@@ -136,15 +155,24 @@ export function QuoteForm({
             type="file"
             multiple
             accept="image/jpeg,image/png,image/webp,image/heic"
-            disabled
-            hint="Maximum 3 images, 4MB total. Photo uploads will be connected in Phase 7."
+            ref={fileField}
+            disabled={preview || isSubmitting}
+            error={photoError}
+            hint="Maximum 3 images, 4MB total"
           />
         </div>
       </details>
-      <Button type="submit" variant={tone === "dark" ? "primary-dark" : "primary"}>
-        Check form preview
+      <Button
+        disabled={isSubmitting}
+        type="submit"
+        variant={tone === "dark" ? "primary-dark" : "primary"}
+      >
+        {isSubmitting ? "Sending" : preview ? "Check form preview" : "Send request"}
       </Button>
-      <div aria-live="polite">{previewChecked && <FormMessage variant="preview" />}</div>
+      <div aria-live="polite">
+        {status === "preview" && <FormMessage variant="preview" form="quote" />}
+        {status === "error" && <FormMessage variant="error" form="quote" />}
+      </div>
     </form>
   );
 }

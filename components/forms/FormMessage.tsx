@@ -15,7 +15,7 @@ export function FormMessage({ variant, form = "quote", id }: FormMessageProps) {
         : "That did not send.";
   const body =
     variant === "preview"
-      ? "The fields are valid. Email delivery will be connected in Phase 7."
+      ? "The fields are valid. This gallery does not send enquiries."
       : variant === "error"
         ? `That did not send. Try again, or ring us on ${site.phone}`
         : form === "quote"
@@ -30,7 +30,9 @@ export function FormMessage({ variant, form = "quote", id }: FormMessageProps) {
     >
       <Icon icon={variant === "success" ? CircleCheck : variant === "error" ? CircleAlert : Info} />
       <div className="space-y-3">
-        <h3 className="text-h4">{title}</h3>
+        <h3 tabIndex={-1} className="text-h4">
+          {title}
+        </h3>
         <p>{body}</p>
       </div>
     </div>
