@@ -448,3 +448,70 @@ index and exposes only furniture to `generateStaticParams`, with dynamicParams f
 
 Review the hub and furniture page before Phase 5. Real photography, client verification,
 contact channels, email submission and launch SEO remain in their scheduled phases.
+
+## Phase 5 review, 14 September 2026
+
+The user approved Phase 4 with "Keep going". PR #5 was merged into staging at
+`1b767b0`; this phase is isolated on `phase/5-services`. Main remains at `6744b9e`.
+No Phase 5 human gate is marked passed. Phase 6 has not been started.
+
+### Content and assembly
+
+Five business content files now register Retail Displays, Exhibitions, Office
+Relocations, Equipment and Business Deliveries alongside Furniture. They satisfy
+the existing ServicePage contract, use the shared coverage copy and render through
+the unchanged service template. Apart from this review documentation and README,
+the only changes are those five files and the registry. No component, app route,
+style, image asset or dependency changed.
+
+Detailed page copy governs each feature section: Retail Displays uses storage,
+Exhibitions uses event availability, Office Relocations uses out-of-hours moves,
+and Business Deliveries uses repeat customers. The Retail and Business bands have
+no items row, as specified. The generic international-band gate conflicts with
+the detailed Exhibition page; the authoritative page copy has been preserved.
+
+### Pending client decisions
+
+- `docs/pages/service-private-deliveries.md` explicitly says "Confirm before this
+  page is built at all." The user has been asked whether DS European accepts private
+  customers. No answer has arrived, so no private content file or route is built.
+  Existing Home/hub/navigation categories remain a seven-category staging draft;
+  this is not a decision to launch or drop private work. The hub FAQ remains omitted.
+- Equipment's ownership FeatureBand is explicitly null until ownership of HIAB and
+  Moffett lifting equipment is confirmed. Its ownership heading and body are absent,
+  with no invented replacement. This page has nine sections and two cuts; the other
+  five business pages have ten sections and three cuts.
+- Supplied verification markers remain literal `*(verify)*` text. Draft claims,
+  photography, contact channels and publication permissions are not signed off by
+  phase-layout approval. No new claims or stock photography were introduced.
+
+### Verification evidence
+
+- Production build, ESLint and standalone TypeScript pass. All six registered
+  business service routes return HTTP 200. Private and an unknown service return 404.
+- Compared supplied headings, paragraphs, lists, process cells, image briefs, CTAs
+  and FAQs with rendered HTML: Furniture 82 values, Retail 79, Exhibition 82,
+  Office 82, Equipment 75 and Business 78. All 478 values are present. Equipment's
+  pending ownership section is explicitly excluded from this check.
+- All six pages have six FAQs. None of the 36 questions or answers are duplicated
+  across pages. FAQ schema matches the supplied answers; breadcrumbs have three
+  entries. Each page uses its supplied title, description and primary H1.
+- Related links match the detailed page pairings and order, including `/storage`
+  on every business page. The Equipment fleet CTA is exactly `/about#fleet`.
+- Browser checks at 390, 768 and 1440 pixels cover all five new pages: one H1,
+  expected section/cut counts, six initially closed FAQs, no horizontal overflow,
+  no clipped image briefs and no duplicate IDs. Split media stacks first below lg.
+- Full-page visual inspection covered Retail, Office and Exhibition on desktop,
+  Equipment on tablet and Business Deliveries on phone. Long copy and optional
+  feature rows fit their existing layouts.
+- The overview Exhibition card opens the correct new route. Business Deliveries'
+  related Equipment link opens its page. A native FAQ opens on click and closes
+  with Enter when its summary has focus.
+- No new performance or full Lighthouse claim is made for this content-only phase.
+  Phase 10 remains the full launch audit.
+
+The all-seven-routes and private-client decision gates cannot pass while the private
+page decision is pending. Review the five new business pages and resolve the two
+client questions before completing this phase. About/fleet anchor, Storage, Recent
+Jobs, forms and launch SEO remain in their scheduled phases. No placeholder page
+has been invented to claim those destination checks pass.
