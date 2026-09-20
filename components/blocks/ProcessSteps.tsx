@@ -22,19 +22,21 @@ export function ProcessSteps({ heading, steps, tone, section }: ProcessStepsProp
         <ol className="process-grid grid gap-8 lg:grid-cols-3 lg:gap-6">
           {steps.map((step) => (
             <li key={step.number} className="relative space-y-4">
-              <span
-                className="process-number block-accent text-display-md font-bold"
-                aria-hidden="true"
-              >
-                {step.number}
-              </span>
-              {step.icon && (
-                <Icon
-                  icon={step.icon}
-                  size={32}
-                  tone={resolvedTone === "dark" ? "accent-on-dark" : "accent"}
-                />
-              )}
+              <div className="flex items-center gap-4">
+                <span
+                  className="process-number block-accent text-display-md font-bold"
+                  aria-hidden="true"
+                >
+                  {step.number}
+                </span>
+                {step.icon && (
+                  <Icon
+                    icon={step.icon}
+                    size={32}
+                    tone={resolvedTone === "dark" ? "accent-on-dark" : "accent"}
+                  />
+                )}
+              </div>
               <h3 className="relative text-h4">{step.title}</h3>
               <p className="block-muted relative text-body-sm">{step.body}</p>
             </li>

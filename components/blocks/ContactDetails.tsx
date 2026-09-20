@@ -56,30 +56,35 @@ export function ContactDetails({
           className={`grid gap-8 ${layout === "grid" ? `md:grid-cols-2 ${items.length === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"}` : ""}`}
         >
           {items.map((item) => (
-            <div key={item.label} className="flex min-w-0 items-start gap-4">
-              <Icon icon={item.icon} tone={resolvedTone === "dark" ? "accent-on-dark" : "accent"} />
-              <div className="min-w-0 space-y-2">
-                <dt className="text-body-sm font-bold">{item.label}</dt>
-                <dd className="contact-value block-muted">
-                  {item.href ? (
-                    <Link
-                      href={item.href}
-                      className={
-                        item.label === "Phone"
-                          ? "text-h3 font-bold underline-offset-4 hover:underline"
-                          : "underline-offset-4 hover:underline"
-                      }
-                    >
-                      {item.value}
-                    </Link>
-                  ) : (
-                    <span className={item.label === "Phone" ? "text-h3 font-bold" : "text-body-sm"}>
-                      {item.value}
-                    </span>
-                  )}
-                  {item.note && <p className="mt-2 text-body-sm">{item.note}</p>}
-                </dd>
-              </div>
+            <div key={item.label} className="relative min-w-0 space-y-2 pl-10">
+              <dt className="text-body-sm font-bold">
+                <span className="absolute left-0 top-0">
+                  <Icon
+                    icon={item.icon}
+                    tone={resolvedTone === "dark" ? "accent-on-dark" : "accent"}
+                  />
+                </span>
+                {item.label}
+              </dt>
+              <dd className="contact-value block-muted">
+                {item.href ? (
+                  <Link
+                    href={item.href}
+                    className={
+                      item.label === "Phone"
+                        ? "text-h3 font-bold underline-offset-4 hover:underline"
+                        : "underline-offset-4 hover:underline"
+                    }
+                  >
+                    {item.value}
+                  </Link>
+                ) : (
+                  <span className={item.label === "Phone" ? "text-h3 font-bold" : "text-body-sm"}>
+                    {item.value}
+                  </span>
+                )}
+                {item.note && <p className="mt-2 text-body-sm">{item.note}</p>}
+              </dd>
             </div>
           ))}
         </dl>

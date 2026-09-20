@@ -506,7 +506,7 @@ body:has(.legal-page) .motif-shape {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
+    width: 44px;
     height: 44px;
   }
   .chevron,
@@ -964,10 +964,7 @@ body:has(.legal-page) .motif-shape {
     padding-top: 24px;
   }
   .process-number {
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0.2;
+    position: static;
   }
   .feature-items li {
     display: flex;
