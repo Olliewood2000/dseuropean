@@ -1,5 +1,7 @@
 # Temporary review imagery
 
+Review update: at the user's request, visible temporary-image captions have been removed from all review photos. Descriptive alt text and the production exclusion remain in place. The original generation record below describes the initial version.
+
 Created with the built-in image generation tool, one new image per asset, no reference photographs. User-authorised staging examples only. Generated at 1536 by 1024; encoded as WebP quality 78 for the website. Every rendered image is labelled as AI-generated. The figures do not document actual people, places or DS European jobs.
 
 ## Generation brief summaries

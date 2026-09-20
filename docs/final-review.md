@@ -1,6 +1,8 @@
 # Final staging review and launch handover
 Updated 20 September 2026. This is a review build, not a production launch.
 
+Subsequent review change: the user requested removal of all visible photo placeholder captions. They have been removed across the review site; the images remain temporary and are still excluded from production.
+
 ## What is implemented
 
 All 17 planned page layouts are available in the review: Home, Services, seven service pages, Storage, About, Recent Jobs, Quote, Contact, Privacy, Cookies and Terms. The site includes responsive navigation, mobile menu, contact bar, FAQs, enquiry validation and uploads, email handlers, structured data, individual sharing images, sitemap, error pages and security headers.
@@ -64,4 +66,3 @@ The warehouse capacity, security, insurance and bonded-status details are still 
 - Obtain final launch approval, then deploy production, verify Search Console, submit sitemap and align the Google Business Profile address.
 
 Main has not been merged or changed by this work. The completed review is on a separate branch targeting staging.
-

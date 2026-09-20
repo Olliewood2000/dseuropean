@@ -37,12 +37,7 @@ export function renderMedia(
         : /room|interior|fitter|team|hands|domestic/.test(brief)
           ? "installation"
           : "transport";
-    return (
-      <figure>
-        <ImageFrame {...media} {...examples[key]} {...overrides} />
-        <figcaption className="mt-2 text-micro">Temporary AI-generated image</figcaption>
-      </figure>
-    );
+    return <ImageFrame {...media} {...examples[key]} {...overrides} />;
   }
   return "src" in media ? (
     <ImageFrame {...media} {...overrides} />
