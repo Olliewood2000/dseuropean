@@ -80,8 +80,8 @@ No icons. The figures carry it.
 Block: ServiceGrid
 Background: subtle
 Padding: standard
-Columns: 3
-Show images: false
+Variant: showcase
+Show images: true
 ```
 
 **Eyebrow:** WHAT WE MOVE
@@ -90,17 +90,19 @@ Show images: false
 **Intro**
 > Every job is different, so every quote is built around the item, the route and the deadline. These are the areas we work in most.
 
-| Title | Excerpt | Href |
-|---|---|---|
-| Furniture | Bespoke, luxury and designer pieces handled with care from collection through to installation. | `/services/furniture-transport` |
-| Retail Displays | Pop-up units, store fixtures and brand activation materials delivered securely and on schedule. | `/services/retail-display-transport` |
-| Exhibitions | Show stands, event builds and promotional setups transported and set up directly at the venue. | `/services/exhibition-transport` |
-| Office Relocations | Full office moves, including dismantling, transport, installation and reassembly on site. | `/services/office-relocations` |
-| Equipment | Commercial, specialist and technical equipment moved safely with professional handling. | `/services/equipment-transport` |
-| Business Deliveries | Scheduled or repeat routes for businesses that need a dependable transport partner. | `/services/business-deliveries` |
-| Private Items | One-off personal deliveries for items that matter and cannot be entrusted to a standard courier. | `/services/private-deliveries` |
+| Title | Excerpt | Href | Image brief |
+|---|---|---|---|
+| Furniture | Bespoke, luxury and designer pieces handled with care from collection through to installation. | `/services/furniture-transport` | A wrapped piece being carried into a finished interior |
+| Retail Displays | Pop-up units, store fixtures and brand activation materials delivered securely and on schedule. | `/services/retail-display-transport` | A pop-up unit part assembled in an empty retail space |
+| Exhibitions | Show stands, event builds and promotional setups transported and set up directly at the venue. | `/services/exhibition-transport` | Flight cases on a venue floor during build up |
+| Office Relocations | Full office moves, including dismantling, transport, installation and reassembly on site. | `/services/office-relocations` | Desks being reassembled in a new office |
+| Equipment | Commercial, specialist and technical equipment moved safely with professional handling. | `/services/equipment-transport` | A Moffett unloading a crated machine |
+| Business Deliveries | Scheduled or repeat routes for businesses that need a dependable transport partner. | `/services/business-deliveries` | A branded vehicle at a loading bay |
+| Private Items | One-off personal deliveries for items that matter and cannot be entrusted to a standard courier. | `/services/private-deliveries` | A single blanket wrapped item entering a home |
 
-Seven cards at three columns leaves a short final row. That is correct. Do not add a filler card.
+Image briefs are shared with the services hub grid. Hero photographs are not reused here. Until real photography arrives each slot renders `ImagePlaceholder` with its brief.
+
+From `lg` the seven services form a single ruled index beside the image stage, so there is no short final row. Below `lg` they fall back to image-topped cards, where a short final row is correct. Do not add a filler card.
 
 Icons: build with them, review at final size, pull all seven if they blur together.
 
@@ -132,8 +134,12 @@ Reverse: false (media left)
 
 **CTA:** About DS European → `/about` (secondary)
 
-**Image brief**
+**Media:** gallery of three.
+
+**Image brief (lead, 3/4)**
 > Close crop of gloved hands unwrapping a packing blanket from a piece of furniture. Detail shot rather than wide. This is the single most valuable photograph on the site and is easy to capture on a phone.
+
+**Supporting images (4/3):** `Glass_pod_Hero_Image.webp` and `Office_Desk_Hero_Image.webp`, with the alt text used in the hero. Swap for job photographs as they arrive.
 
 ---
 
@@ -141,8 +147,8 @@ Reverse: false (media left)
 
 ```
 Block: ProcessSteps
-Background: subtle
-Padding: standard
+Background: surface
+Padding: standard (no top padding, continues section 4 as one white band)
 Tone: light
 ```
 
@@ -241,21 +247,31 @@ Background: surface
 Padding: compact
 ```
 
-**Title:** The right vehicle for the item
+**Eyebrow:** OUR VEHICLES
 
-| Name | Capacity | Icon |
-|---|---|---|
-| LWB and Luton | Tail lift | `Van` |
-| 7.5 tonne | Curtain or box | `Truck` |
-| 18 tonne | Curtain or box | `Truck` |
-| HIAB | Crane mounted | `Crane` |
-| 26 tonne Moffett | Forklift mounted | `Forklift` |
+**Title:** The right vehicle for the item (accent line: "for the item")
+
+**Intro:** From single items to full loads, our modern fleet and specialist vehicles ensure your goods are moved safely and efficiently.
+
+**Image:** `/images/Ds_Hero_webps/Fleet_Vehicles_Hero_Image.webp`
+
+| Name | Capacity | Icon | Vehicle image |
+|---|---|---|---|
+| LWB and Luton | Tail lift | `LutonVan` | `LutonVAN.webp` |
+| 7.5 tonne | Curtain or box | `RigidLorry` | `7.5 Tonne.webp` |
+| 18 tonne | Curtain or box | `HeavyLorry` | `18Tonne.webp` |
+| HIAB | Crane mounted | `CraneLorry` | `HIAB.webp` |
+| 26 tonne Moffett | Forklift mounted | `ForkliftLorry` | `Moffett.webp` |
+
+Vehicle images live in `/images/Vehicle Webps/`.
 
 Icons kept. Vehicle types are scanned, not read.
 
 ---
 
-## Section 10. Recent jobs
+## Section 10. Recent jobs (removed)
+
+Removed from Home: it repeated the Recent installations band (section 6), which already names the same locations and links to `/recent-jobs`. The draft entries below are kept for the Recent jobs page.
 
 ```
 Block: JobGrid
@@ -288,7 +304,7 @@ Switch to `variant: card` the day usable photography is supplied. No rebuild req
 Block: QuoteCTA
 Background: inverse
 Padding: generous
-Cut: top (falling left to right)
+Cut: none (flat top edge, reserved for the planned lorry scroll effect)
 ```
 
 **Title:** Tell us what needs moving

@@ -73,7 +73,7 @@ Show images: true
 **Intro**
 > If your job sits across two of these, that is normal. Most of our work does.
 
-Same seven services, same hrefs and excerpts as Home. This grid uses `showImages: true`, which is the only difference between the two. Where photography is missing, `ImagePlaceholder` renders with a per service brief.
+Same seven services, same hrefs and excerpts as Home. This grid uses the default cards variant with `showImages: true`. Home uses the showcase variant with the same briefs. Where photography is missing, `ImagePlaceholder` renders with a per service brief.
 
 | Service | Image brief |
 |---|---|
