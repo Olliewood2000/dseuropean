@@ -199,18 +199,28 @@ Padding: standard
 
 **Eyebrow:** OUR CLIENTS
 **Title:** Built around the way these businesses work
+**Title accent:** these businesses work
 
 **Intro**
-> The majority of our customers are repeat traders who use us across multiple projects a year.
+> The majority of our customers are repeat traders who use us across multiple projects a year. We provide flexible, reliable logistics that fit the way your business and projects run.
 
-| Title | Body |
-|---|---|
-| Interior designers | Bespoke and specified pieces collected from makers, stored until the property is ready, then installed on site. |
-| Event organisers | Stands, builds and activation materials delivered to venue, set up to schedule and collected afterwards. |
-| Fit-out contractors | Programme led deliveries into live sites, with fitters who understand access, timings and site rules. |
-| Bespoke furnishers | One-off and high value pieces handled by people who treat them the way you made them. |
+| Title | Body | Benefit |
+|---|---|---|
+| Interior designers | Bespoke and specified pieces collected from makers, stored until the property is ready, then installed on site. | White-glove handling |
+| Event organisers | Stands, builds and activation materials delivered to venue, set up to schedule and collected afterwards. | Time-critical delivery |
+| Fit-out contractors | Programme led deliveries into live sites, with teams who understand access, timings and site rules. | Site-ready logistics |
+| Bespoke furnishers | One-off and high value pieces handled by people who treat them the way you made them. | Handled with care |
 
-No icons, no images. Four cards, copy only.
+**Images** (supplied, `/images/Our Clients WEBPs/`)
+
+| Card | File | Alt |
+|---|---|---|
+| Interior designers | `Interior designers.webp` | Finished high-end interior design installation |
+| Event organisers | `Event organisers.webp` | Professionally installed exhibition and event stand |
+| Fit-out contractors | `Fit-out contractors.webp` | Commercial interior fit-out project under construction |
+| Bespoke furnishers | `Bespoke furnishers.webp` | Close-up of high-end bespoke wooden furniture |
+
+Four informational image cards, no icons beside titles, no links.
 
 ---
 

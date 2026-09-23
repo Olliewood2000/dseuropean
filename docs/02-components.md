@@ -411,10 +411,13 @@ interface FeatureBandProps {
   items?: string[];          // rendered as large type, e.g. place names
   cta?: { label: string; href: string };
   background?: "inverse" | "accent";   // default "inverse"
+  media?: [Image, Image, Image];       // lead, upper, lower: { src, alt, position? }
 }
 ```
 
 `generous` padding, `cut="both"`, `container="site"`. Title at `display-md`. `items` render as a horizontal row of `h2` weight 700 separated by a 4px `accent-on-dark` square, wrapping to a stacked list below `md`.
+
+With `media`, the band splits into copy and a layered collage (copy stacked above from `lg` down). `items` become outlined location pills with a `MapPin`, and the CTA takes a trailing arrow. The collage is three overlapping slanted frames with level photographs over three `accent` bars. Below `md` it simplifies to the lead image full width with the other two side by side beneath.
 
 Two `MotifShape` tints. Works entirely without photography, which is why it carries the international proof on Home.
 
@@ -436,11 +439,20 @@ Larger and more prominent than `TrustStrip`. Figures at `display-lg` through `Co
 ```ts
 interface AudienceGridProps {
   heading: SectionHeadingProps;
-  audiences: { title: string; body: string; href?: string }[];
+  audiences: {
+    title: string;
+    body: string;
+    href?: string;
+    image?: { src: string; alt: string; position?: string };
+    benefit?: string;
+  }[];
+  titleAccent?: string;
 }
 ```
 
 Four `Card` items, no icons, no images. Title at `h4`, body at `body-sm` in two lines. `href` is left unset until sector pages exist in phase 2.
+
+When any item has an `image`, the block renders as image cards (`AudienceCard`): eyebrow with a trailing accent line, a two-tone heading (`titleAccent` on its own line in accent blue), then four informational cards in a subgrid so rows align. Each card has a short accent rule, title at `h4`, body at `body-sm`, a 3/2 image with a pale skewed motif behind its right edge, and a pale blue benefit strip with a check. One column, two from `sm`, four from `xl`. Cards are never links. Pale skewed shapes sit at the section's outer edges.
 
 ### FleetStrip
 

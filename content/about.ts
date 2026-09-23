@@ -145,15 +145,20 @@ export const about = {
       title: "The right vehicle for the item",
       intro: "The vehicle is chosen for the item and the access at both ends.",
     },
+    titleAccent: "for the item",
     vehicles: fleet.map((vehicle) =>
       vehicle.name === "26 tonne Moffett"
         ? { ...vehicle, capacity: "Vehicle mounted forklift" }
         : vehicle,
     ),
+    media: {
+      src: "/images/Ds_Hero_webps/Fleet_Vehicles_Hero_Image.webp",
+      alt: "Vans and box lorries parked in front of a warehouse.",
+    },
     section: {
       id: "fleet",
       background: "surface",
-      padding: "standard",
+      padding: "compact",
     },
   } satisfies FleetStripProps,
   coverage: {

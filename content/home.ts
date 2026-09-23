@@ -234,6 +234,22 @@ export const home = {
       label: "See our work",
       href: "/recent-jobs",
     },
+    media: [
+      {
+        src: "/images/What We Move Webps/Furniture.webp",
+        alt: "Living room with a striped rug, round side tables and a curved armchair beside a fireplace.",
+        position: "50% 30%",
+      },
+      {
+        src: "/images/What We Move Webps/One_off_Items.webp",
+        alt: "Green patterned chaise longue placed beside a fireplace.",
+        position: "50% 60%",
+      },
+      {
+        src: "/images/Our Clients WEBPs/Interior designers.webp",
+        alt: "Finished high-end interior design installation",
+      },
+    ],
     section: {
       id: "home-international",
       background: "inverse",
@@ -246,24 +262,46 @@ export const home = {
       eyebrow: "OUR CLIENTS",
       title: "Built around the way these businesses work",
       intro:
-        "The majority of our customers are repeat traders who use us across multiple projects a year.",
+        "The majority of our customers are repeat traders who use us across multiple projects a year. We provide flexible, reliable logistics that fit the way your business and projects run.",
     },
+    titleAccent: "these businesses work",
     audiences: [
       {
         title: "Interior designers",
         body: "Bespoke and specified pieces collected from makers, stored until the property is ready, then installed on site.",
+        image: {
+          src: "/images/Our Clients WEBPs/Interior designers.webp",
+          alt: "Finished high-end interior design installation",
+        },
+        benefit: "White-glove handling",
       },
       {
         title: "Event organisers",
         body: "Stands, builds and activation materials delivered to venue, set up to schedule and collected afterwards.",
+        image: {
+          src: "/images/Our Clients WEBPs/Event organisers.webp",
+          alt: "Professionally installed exhibition and event stand",
+        },
+        benefit: "Time-critical delivery",
       },
       {
         title: "Fit-out contractors",
-        body: "Programme led deliveries into live sites, with fitters who understand access, timings and site rules.",
+        body: "Programme led deliveries into live sites, with teams who understand access, timings and site rules.",
+        image: {
+          src: "/images/Our Clients WEBPs/Fit-out contractors.webp",
+          alt: "Commercial interior fit-out project under construction",
+        },
+        benefit: "Site-ready logistics",
       },
       {
         title: "Bespoke furnishers",
         body: "One-off and high value pieces handled by people who treat them the way you made them.",
+        image: {
+          src: "/images/Our Clients WEBPs/Bespoke furnishers.webp",
+          alt: "Close-up of high-end bespoke wooden furniture",
+          position: "30% 50%",
+        },
+        benefit: "Handled with care",
       },
     ],
     section: {
