@@ -389,10 +389,22 @@ Permitted:
 - Card hover: shadow change plus 2px rise, `duration-fast`
 - Image hover: scale to 1.03, `duration-slow`
 - Button hover: background colour only
+- Stat figures in `TrustStrip` and `StatBand` only: count up once from 0 over 1400ms with an ease-out, staggered 120ms per item, alongside the section entry rise. See `CountUp` in `02-components.md`
 
-Not permitted: carousels, parallax, counting numbers, typewriter effects, looping background video, anything with a bounce easing.
+Not permitted: carousels, parallax, counting numbers anywhere other than those stat figures, typewriter effects, looping background video, anything with a bounce easing.
 
 All of it wrapped in `prefers-reduced-motion: reduce`.
+
+### Approved exception: home hero
+
+Approved by the client on 23 September 2026, for the home hero only. It does not extend to any other block or page.
+
+- A crossfading backdrop of six real photographs, 6s each, with a slow scale drift from 1 to 1.05 while each is visible, and six 15 degree progress bars. This is the only carousel on the site. It has no controls and no autoplay beyond the crossfade.
+- A gradient overlay fading the photographs into `surface-inverse` on the left, plus a short navy fade at the top behind the header. This is the only gradient overlay on the site.
+- The headline, subtitle and buttons use the section entry rise on first paint, staggered 120ms.
+- A faint globe outline sits behind the copy in place of the motif shapes. The headline is 88px from `xl`, above the `display-xl` token, with its final line in `accent-on-dark`.
+
+Under `prefers-reduced-motion: reduce` the hero shows the first photograph only, with no drift, no progress bars and no entry animation. Details are in the Hero entry in `02-components.md`.
 
 ---
 

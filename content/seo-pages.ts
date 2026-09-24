@@ -5,6 +5,8 @@ import { storage, storageMeta } from "./storage";
 import { about, aboutMeta } from "./about";
 import { quotePage, quoteMeta, contactPage, contactMeta } from "./enquiry-pages";
 import { legalPages } from "./legal";
+import { recentJobsMeta } from "./recent-jobs";
+import { isReviewBuild } from "@/lib/review";
 
 export interface SeoPage {
   path: string;
@@ -12,7 +14,7 @@ export interface SeoPage {
   meta: { title: string; description: string; ogTitle?: string; ogDescription?: string };
 }
 
-// Only implemented public routes. Private deliveries and Recent Jobs await client decisions.
+// Review drafts are omitted from production until the outstanding decisions are resolved.
 export const seoPages: readonly SeoPage[] = [
   { path: "/", title: homeMeta.ogTitle, meta: homeMeta },
   { path: "/services", title: servicesHub.hero.title, meta: servicesHubMeta },
@@ -23,6 +25,7 @@ export const seoPages: readonly SeoPage[] = [
   })),
   { path: "/storage", title: storage.hero.title, meta: storageMeta },
   { path: "/about", title: about.hero.title, meta: aboutMeta },
+  ...(isReviewBuild ? [{ path: "/recent-jobs", title: "Recent jobs", meta: recentJobsMeta }] : []),
   { path: "/quote", title: quotePage.hero.title, meta: quoteMeta },
   { path: "/contact", title: contactPage.hero.title, meta: contactMeta },
   ...Object.entries(legalPages).map(([slug, page]) => ({

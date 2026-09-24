@@ -1,5 +1,7 @@
+import { Route } from "lucide-react";
 import { Section } from "@/components/layout/Section";
 import { Button } from "@/components/primitives/Button";
+import { Icon } from "@/components/primitives/Icon";
 import { MotifShape } from "@/components/primitives/MotifShape";
 import { SectionHeading } from "@/components/primitives/SectionHeading";
 import { site } from "@/content/site";
@@ -24,6 +26,11 @@ export function QuoteCTA({
       <MotifShape variant="tint" tone="white" position="top-right" size="lg" opacity={0.08} />
       <MotifShape variant="tint" tone="white" position="bottom-left" size="lg" opacity={0.08} />
       <div className="quote-cta relative space-y-6 text-center">
+        <div className="quote-cta-mark" aria-hidden="true">
+          <span className="quote-cta-mark-face">
+            <Icon icon={Route} size={44} />
+          </span>
+        </div>
         <SectionHeading title={title} intro={body} align="center" tone="dark" />
         <div className="flex flex-wrap items-center justify-center gap-8 pt-4">
           <Button href={primaryCta.href} variant="primary-dark" size="lg">

@@ -2,8 +2,8 @@ import type { LucideIcon } from "lucide-react";
 
 export interface IconProps {
   icon: LucideIcon;
-  size?: 20 | 24 | 32;
-  tone?: "accent" | "accent-on-dark" | "muted";
+  size?: 20 | 24 | 32 | 44 | 56;
+  tone?: "accent" | "accent-on-dark" | "muted" | "inverse";
   label?: string;
 }
 
@@ -11,6 +11,7 @@ const tones = {
   accent: "text-accent",
   "accent-on-dark": "text-accent-on-dark",
   muted: "text-ink-muted",
+  inverse: "text-ink-inverse",
 };
 
 export function Icon({ icon: Glyph, size = 24, tone = "accent", label }: IconProps) {

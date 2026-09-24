@@ -13,10 +13,10 @@ Read alongside `01-brand-and-tokens.md`. Every value referenced here is defined 
 ```
 /components
   /primitives     Button, Eyebrow, SectionHeading, ArrowLink, Icon,
-                  MotifShape, ImageFrame, ImagePlaceholder, Card
+                  MotifShape, ImageFrame, ImagePlaceholder, Card, CountUp
   /layout         Container, Section, Header, MobileDrawer,
                   StickyContactBar, Footer, Breadcrumbs
-  /blocks         Hero, TrustStrip, ServiceGrid, SplitFeature,
+  /blocks         Hero, TrustStrip, ServiceGrid, ServiceShowcase, SplitFeature,
                   TwoColumnText, ProcessSteps, FeatureBand, StatBand,
                   AudienceGrid, FleetStrip, JobGrid, CoverageList, FAQ,
                   RelatedServices, FormWithAside, QuoteCTA, ContactDetails
@@ -43,6 +43,7 @@ interface SectionProps {
   cut?: SectionCut;                 // default "none"
   container?: "site" | "narrow" | "full"; // default "site"
   id?: string;
+  className?: string;               // block-specific hooks only, e.g. "hero-home"
   children: React.ReactNode;
 }
 ```
@@ -186,6 +187,21 @@ interface CardProps {
 
 Light: white, 1px `border`, `radius-lg` with the motif corner treatment. Dark: `navy-900`, 1px `border-inverse`. Hover when `href` present: `shadow-md` and 2px rise over `duration-fast`. Never both a border and a resting shadow.
 
+### CountUp
+
+The figure inside `TrustStrip` and `StatBand`. Nowhere else.
+
+```ts
+interface CountUpProps {
+  value: string;   // the figure exactly as written in content
+  index?: number;  // position in the strip, staggers the start by 120ms each
+}
+```
+
+Client component. A figure that is a whole number, optionally followed by a word ("60 years"), counts from 0 to its value once, over 1400ms with an ease-out, when 15 percent of it is visible. The word renders at `h3` beside the digits. Any other figure ("24/7") renders as written and only rises in. Digits are tabular and hold their final width so nothing shifts while counting.
+
+The written value is always in the DOM for screen readers and search; the animated digits are `aria-hidden`. Under `prefers-reduced-motion: reduce`, or without JavaScript, the final value shows with no count. If the script never hydrates, a 3 second CSS fallback reveals the figure.
+
 ---
 
 ## 4. Chrome
@@ -254,6 +270,19 @@ interface HeroProps {
 
 **home**: `inverse`, `generous`, `cut="bottom"`. Title at `display-xl`. 7/5 split with a masked image right at `lg` and above, image hidden below `md`. Two `MotifShape` elements bleeding off the right. Header transparent over it.
 
+With `backgroundImages` (six real photographs, `src` and `alt`), the home hero replaces the masked image with a crossfading backdrop. CSS only, no client JavaScript.
+
+- **Backdrop:** covers the right 65% at `lg` and above, fading into `surface-inverse` on the left, with a short navy fade at the top for the header. Between `md` and `lg` it shows as a rounded 3/2 frame below the copy; hidden below `md`.
+- **Behind the header:** from `lg` the section is pulled up under the transparent header so the photographs start at the top of the page. From `xl` the hero is at least the viewport height, capped at 1080px, with the copy vertically centred.
+- **Timing:** each slide holds for 6s on a 36s cycle and drifts slowly from scale 1 to 1.05 while visible.
+- **Progress:** six 15 degree bars at the bottom right of the backdrop fill in step with the slides. Decorative, `aria-hidden`.
+- **Globe:** the upper right quarter of an accurate globe outline (orthographic projection centred on the mid Atlantic, land outlines and a 15 degree graticule) sits behind the copy, anchored to the bottom left of the section. `public/images/hero-globe.svg`, white strokes at 15 percent opacity, masked out between 35 and 85 percent of its width so it fades before the photographs. It replaces the two tint `MotifShape`s. Below `lg` the photo frame sits above it.
+- **Headline:** tracking tightened to -0.035em; from `xl`, 88px with a line height of 1. The final line ("and finished.") is set in `accent-on-dark`.
+- **Padding:** from `lg` the home hero uses 40px top and bottom padding (56px from `xl`) instead of `generous`, plus the header height and cut. Height follows the content, with no minimum. On desktop screens 880px tall or less, padding drops to 24px, the headline to `display-lg` and the gaps to 20px, so the progress bars stay visible without scrolling.
+- **Testimonials (optional):** `testimonials: { quote, attribution }[]` renders a white `surface` card under the buttons, with the `card-motif` corner treatment, a short 15 degree `accent` marker, the quote in `ink` and the attribution in `ink-muted`. The gap above the card matches the gap above the buttons. With more than one, the quotes crossfade every 6s on the same beat as the photographs (timing assumes exactly three), and the card holds the height of the longest quote. The marker is then replaced by one progress bar per quote, the same 15 degree shape as the photograph bars but with an `accent` fill on a `border` track. Under reduced motion only the first quote shows, the bars hide and the single marker returns. Only real, client-approved testimonials may be used (`00-source-of-truth.md` section 9). Nothing renders when absent.
+- **Entry:** the headline lines (split at the existing commas), then the subtitle, the buttons and the testimonial fade in with the 16px rise at `duration-slow`, staggered 120ms.
+- **Reduced motion:** the first photograph only, no drift, no progress bars, no entry animation.
+
 **page**: `inverse`, `standard`, `cut="bottom"`. Title at `display-lg`, no image, subtitle capped at 60ch. Breadcrumbs above the title.
 
 **service**: `inverse`, `standard`, `cut="bottom"`. As page, but with a single masked image right at 5 columns and the primary CTA always "Get a quote".
@@ -269,7 +298,7 @@ interface TrustStripProps {
 }
 ```
 
-Sits directly beneath a hero at `compact` padding. Figures at `h2` in `accent`, labels at `body-sm` in `ink-muted`. Four across at `lg`, two by two at `md`, stacked below. 1px vertical dividers between items at `lg` only.
+Sits directly beneath a hero at `compact` padding. Figures at `display-md` in `accent` through `CountUp`, labels at `body-sm` in `ink-muted`. Each item opens with a 32 by 4px accent marker skewed at the motif angle, which draws in from the left as its figure reveals. Four across at `lg`, two by two at `md`, stacked below. 1px vertical dividers between items at `lg` only.
 
 No icons. The figures are the visual.
 
@@ -287,14 +316,23 @@ interface ServiceGridProps {
   }[];
   columns?: 2 | 3;          // default 3
   showImages?: boolean;     // default false
+  variant?: "cards" | "showcase"; // default "cards"
 }
 ```
 
-`Card` per service. Anatomy top to bottom: optional 24px icon top left, title at `h4`, excerpt at `body-sm` in `ink-muted` capped at three lines, `ArrowLink` "View service" pinned to the card foot. Equal heights within a row.
+**cards** (default): `Card` per service. Anatomy top to bottom: optional 24px icon top left, title at `h4`, excerpt at `body-sm` in `ink-muted` capped at three lines, `ArrowLink` "View service" pinned to the card foot. Equal heights within a row.
 
 Three across at `lg`, two at `md`, one below. With seven services the last row runs short at three columns, which is correct and should not be padded with a filler card.
 
 Icon decision per tokens section 14: build with icons, review at final size, pull them if they blur together.
+
+**showcase**: an image-led index for Home. Every service needs an `image`, real or placeholder.
+
+- From `lg`: a 12 column split. Left, 6 columns, a ruled index of every service. Clicking a row selects it (the page scrolls smoothly to that service's point in the pinned run and it becomes active); only "View service" navigates to the service page. Each row shows: index number (01, 02 and so on) in `label`, the icon, title at `h4`, excerpt at `body-sm` in `ink-muted`, and "View service" with the arrow. The section heading sits in the left column above the index. Right, 6 columns, a stage up to 600px tall whose top aligns with the eyebrow, holding every service image stacked, with the `card-motif` corner, `shadow-lg`, a solid accent motif panel behind it at the brand angle, and the active service title on a solid navy chip in the bottom left corner. Beneath the stage, a step row: one 40px circle per service carrying that service's icon, joined by a 2px `border` rule that fills in `accent` up to the active service. The active circle is `surface-inverse` with an `accent-on-dark` icon at 1.25 scale; passed circles take an `accent` border. The row shows the full count on arrival, and each circle is a button (labelled with the service title) that selects its service.
+- Behaviour: the heading, index and stage pin together as one panel (up to 760px tall) centred vertically in the viewport below the condensed header. Once pinned, the first 180px of scroll moves nothing, so the lock reads as its own moment; only then does further page scroll move the index upward inside a clipped window beneath the heading, and rows fade out as they pass under it. Scroll progress through the pinned run selects the active service, so scrolling steps through them in order, about 160px of scroll per service. After the last service there is a 120px hold, then the panel releases and the page continues. No scroll hijacking: it is driven by the normal page scroll. Keyboard focus also makes a row active and scrolls the page to its position in the run. The active row is marked by a single `surface-inverse` panel with the `card-motif` corner and `shadow-md` that slides between rows at `duration-slow` with `ease-in-out`. Selecting a row animates the page scroll over the same duration and easing so the two move as one. The row content cross-fades over the same timing, switching to inverse colours (title `ink-inverse`, excerpt and index `ink-inverse-muted`, icon, arrow and link `accent-on-dark`), with a 4px `accent-on-dark` bar skewed at 15 degrees on its left edge and the arrow nudged right. Other rows keep their icons at reduced opacity. The stage crossfades to the active image at `duration-slow` and the image eases to scale 1.03. No autoplay, no controls. Only the active stage image is exposed to assistive technology.
+- Below `lg`: the stage is hidden and each row renders as the image-topped cards layout, 3/2 image, two across at `md`, one below. The "View service" link stretches over the whole card, so the card is a single tap target.
+- Reduced motion: the stage swaps without the crossfade or scale.
+- Implemented as a small client component (`ServiceShowcase`) holding the active index only. Media is rendered on the server and passed in.
 
 ### SplitFeature
 
@@ -306,13 +344,15 @@ interface SplitFeatureProps {
   body: string | string[];
   bullets?: string[];
   cta?: { label: string; href: string; variant?: ButtonProps["variant"] };
-  media: ImageFrameProps | ImagePlaceholderProps;
+  media: Media | [Media, Media, Media];  // Media = ImageFrameProps | ImagePlaceholderProps
   reverse?: boolean;        // media right instead of left
   ratio?: "7/5" | "5/7";    // default "7/5", media side first
 }
 ```
 
 Never 6/6. Vertical centre alignment. Media masked to the motif shape when it sits on an `inverse` background, plain `radius-lg` on light. Bullets use a 20px check icon only where the list is genuinely scanned, otherwise a 4px square marker in `accent`.
+
+**Gallery.** Passing exactly three media items renders a gallery instead of a single image. The first is the lead, at `3/4`, with the motif corner (`radius-2xl` top right). The other two stack beside it at `4/3`, dropped by 40px (64px from `md`) so the column sits staggered against the lead, with a 48 by 6px `accent` marker skewed at the motif angle in the space above. Behind both, a skewed motif panel in `steel-100` (`navy-100` on `subtle`, `surface-raised-inverse` on dark grounds) extends below the images. Images carry `shadow-lg` and are never masked. The layout keeps its two columns at every width and stacks as a unit above the copy below `lg`. Use it where a section is there to show work, not as a default.
 
 Stacks below `lg`, media first regardless of `reverse`.
 
@@ -371,10 +411,13 @@ interface FeatureBandProps {
   items?: string[];          // rendered as large type, e.g. place names
   cta?: { label: string; href: string };
   background?: "inverse" | "accent";   // default "inverse"
+  media?: [Image, Image, Image];       // lead, upper, lower: { src, alt, position? }
 }
 ```
 
 `generous` padding, `cut="both"`, `container="site"`. Title at `display-md`. `items` render as a horizontal row of `h2` weight 700 separated by a 4px `accent-on-dark` square, wrapping to a stacked list below `md`.
+
+With `media`, the band splits into copy and a layered collage (copy stacked above from `lg` down). `items` become outlined location pills with a `MapPin`, and the CTA takes a trailing arrow. The collage is three overlapping slanted frames with level photographs over three `accent` bars. Below `md` it simplifies to the lead image full width with the other two side by side beneath.
 
 Two `MotifShape` tints. Works entirely without photography, which is why it carries the international proof on Home.
 
@@ -389,30 +432,53 @@ interface StatBandProps {
 }
 ```
 
-Larger and more prominent than `TrustStrip`. Figures at `display-md`, labels at `body-sm`. Used on About, not on Home, so the two do not compete.
+Larger and more prominent than `TrustStrip`. Figures at `display-lg` through `CountUp`, with the same accent marker, labels at `body-sm`. Used on About, not on Home, so the two do not compete.
 
 ### AudienceGrid
 
 ```ts
 interface AudienceGridProps {
   heading: SectionHeadingProps;
-  audiences: { title: string; body: string; href?: string }[];
+  audiences: {
+    title: string;
+    body: string;
+    href?: string;
+    image?: { src: string; alt: string; position?: string };
+    benefit?: string;
+  }[];
+  titleAccent?: string;
 }
 ```
 
 Four `Card` items, no icons, no images. Title at `h4`, body at `body-sm` in two lines. `href` is left unset until sector pages exist in phase 2.
+
+When any item has an `image`, the block renders as image cards (`AudienceCard`): eyebrow with a trailing accent line, a two-tone heading (`titleAccent` on its own line in accent blue), then four informational cards in a subgrid so rows align. Each card has a short accent rule, title at `h4`, body at `body-sm`, a 3/2 image with a pale skewed motif behind its right edge, and a pale blue benefit strip with a check. One column, two from `sm`, four from `xl`. Cards are never links. Pale skewed shapes sit at the section's outer edges.
 
 ### FleetStrip
 
 ```ts
 interface FleetStripProps {
   heading?: SectionHeadingProps;
-  vehicles: { name: string; capacity?: string; note?: string; icon: LucideIcon }[];
+  vehicles: VehicleCardProps[];
   cta?: { label: string; href: string };
+  media?: ImageFrameProps | ImagePlaceholderProps;
+  titleAccent?: string;
+}
+
+interface VehicleCardProps {
+  name: string;
+  capacity?: string;
+  note?: string;
+  icon: LucideIcon;
+  image?: { src: string; alt: string };
 }
 ```
 
 Low visual weight, high informational value. Horizontal row at `lg` with 1px dividers, two columns at `md`, stacked below. Each item: 24px icon, name at `body` 700, capacity at `body-sm` in `ink-muted`.
+
+With `media`, the block becomes an equal two column split at `lg`. Left: eyebrow with a 48px accent rule, the title at `display-md` (`h1` below `lg`) with `titleAccent` on its own line in `accent`, the intro in `ink-muted`, then the image at 3/2 over a skewed `blue-100` motif panel. Right: five `VehicleCard` items over a faint skewed `steel-50` panel. Stacks as heading, image, cards below `lg`. Used on Home.
+
+`VehicleCard` is informational: no link, no focus stop, no hover state. White card, 1px `border`, `radius-lg`, `shadow-sm`. Left: a white fleet glyph from `lib/fleet-icons.ts` in an `accent` tile, name at `body-lg` 700, capacity at `body-sm` in `ink-muted`. Right: the supplied vehicle cutout, `object-fit: contain`, over a skewed `blue-50` panel drawn with `::before`. Below 640px the icon sits above the name so the vehicle keeps its width.
 
 Icons are genuinely useful here because vehicle types are scanned rather than read. This is the clearest case on the site for keeping them.
 
@@ -557,7 +623,7 @@ Which blocks build which pages. Page docs confirm and supply content.
 
 | Page | Blocks |
 |---|---|
-| Home | Hero home, TrustStrip, ServiceGrid, SplitFeature, ProcessSteps, FeatureBand, AudienceGrid, SplitFeature storage, FleetStrip, JobGrid, QuoteCTA |
+| Home | Hero home, TrustStrip, ServiceGrid showcase, SplitFeature, ProcessSteps, FeatureBand, AudienceGrid, SplitFeature storage, FleetStrip, QuoteCTA |
 | Services hub | Hero page, ServiceGrid showImages, SplitFeature, ProcessSteps, TwoColumnText, FAQ, QuoteCTA |
 | Service page | Hero service, SplitFeature, SplitFeature reversed, ProcessSteps, FeatureBand, CoverageList, TwoColumnText, FAQ, RelatedServices, QuoteCTA |
 | Storage | Hero page, SplitFeature, TrustStrip, FAQ, QuoteCTA |

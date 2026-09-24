@@ -54,7 +54,7 @@ For any phase, read `06-build-plan.md` plus the docs that phase touches. For pag
 - TypeScript strict. No `any`. No non-null assertions without a comment explaining why.
 - Named exports, one component per file, PascalCase filenames.
 - Tailwind utility classes from the token config. No arbitrary values except where a doc specifies one.
-- Server Components by default. `"use client"` only where interactivity requires it, which is the header, the drawer, the forms and the FAQ.
+- Server Components by default. `"use client"` only where interactivity requires it, which is the header, the drawer, the forms, the FAQ, the stat figure counter (`CountUp`) and the service showcase (`ServiceShowcase`).
 
 ---
 
@@ -74,3 +74,13 @@ npx tsc --noEmit     # must pass clean
 Ask. A question costs one message. A wrong assumption implemented across nine pages costs a phase.
 
 Specifically, ask rather than guess when: a page doc is ambiguous, two docs conflict, the copy will not fit the specified block, or a client detail is marked `PLACEHOLDER_` and you need its value.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

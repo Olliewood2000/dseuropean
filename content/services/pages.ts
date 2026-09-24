@@ -6,8 +6,10 @@ import { officeRelocations } from "./office-relocations";
 import { equipmentTransport } from "./equipment-transport";
 import { businessDeliveries } from "./business-deliveries";
 import type { ServicePage, ServiceSlug } from "./types";
+import { privateDeliveries } from "./private-deliveries";
+import { isReviewBuild } from "@/lib/review";
 
-// Private deliveries remain unregistered until the client confirms that audience.
+// Private deliveries are a review draft; production remains blocked pending confirmation.
 const pages: Partial<Record<ServiceSlug, ServicePage>> = {
   "furniture-transport": furnitureTransport,
   "retail-display-transport": retailDisplayTransport,
@@ -15,6 +17,7 @@ const pages: Partial<Record<ServiceSlug, ServicePage>> = {
   "office-relocations": officeRelocations,
   "equipment-transport": equipmentTransport,
   "business-deliveries": businessDeliveries,
+  ...(isReviewBuild ? { "private-deliveries": privateDeliveries } : {}),
 };
 
 export const servicePages: readonly ServicePage[] = services.flatMap(({ slug }) => {

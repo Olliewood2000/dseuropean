@@ -1,5 +1,7 @@
 import { z } from "zod";
 import type { FieldValues, Resolver, FieldErrors } from "react-hook-form";
+// Keep validation compatible with the CSP without enabling eval in the browser.
+z.config({ jitless: true });
 export const formMessages = {
   required: "This one is needed",
   email: "That does not look like an email address",

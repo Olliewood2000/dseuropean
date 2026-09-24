@@ -11,6 +11,7 @@ export interface SectionProps {
   cut?: SectionCut;
   container?: "site" | "narrow" | "full";
   id?: string;
+  className?: string;
   children: ReactNode;
 }
 
@@ -20,6 +21,7 @@ export function Section({
   cut = "none",
   container = "site",
   id,
+  className,
   children,
 }: SectionProps) {
   // Light surfaces have no cut, even if a caller requests one.
@@ -27,7 +29,7 @@ export function Section({
   return (
     <section
       id={id}
-      className={`section section-${background} section-${padding} cut-${resolvedCut}`}
+      className={`section section-${background} section-${padding} cut-${resolvedCut} ${className ?? ""}`}
     >
       <Container variant={container}>{children}</Container>
     </section>
