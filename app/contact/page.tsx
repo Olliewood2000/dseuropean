@@ -2,7 +2,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { webPageSchema } from "@/lib/structured-data";
 import { pageMetadata } from "@/lib/metadata";
 import type { Metadata } from "next";
-import { Phone, MessageCircle, Mail, MapPin } from "lucide-react";
+import { Phone, MessageCircle, Mail } from "lucide-react";
 import { Hero } from "@/components/blocks/Hero";
 import { ContactDetails } from "@/components/blocks/ContactDetails";
 import { FormWithAside } from "@/components/blocks/FormWithAside";
@@ -11,7 +11,7 @@ import { QuoteCTA } from "@/components/blocks/QuoteCTA";
 import { Button } from "@/components/primitives/Button";
 import { contactMeta, contactPage } from "@/content/enquiry-pages";
 import { site } from "@/content/site";
-import { contactLinks, fullAddress, directionsLink } from "@/lib/contact";
+import { contactLinks, directionsLink } from "@/lib/contact";
 
 export const metadata: Metadata = pageMetadata("/contact");
 export default function ContactPage() {
@@ -47,7 +47,6 @@ export default function ContactPage() {
             note: "We read everything that comes in",
             icon: Mail,
           },
-          { label: "Address", value: fullAddress, href: directionsLink, icon: MapPin },
         ]}
       />
       <FormWithAside

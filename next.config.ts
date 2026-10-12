@@ -6,7 +6,7 @@ const csp = [
   "default-src 'self'",
   `script-src 'self' 'unsafe-inline'${development ? " 'unsafe-eval'" : ""}${preview ? " https://vercel.live" : ""}`,
   `style-src 'self' 'unsafe-inline'${preview ? " https://vercel.live" : ""}`,
-  `img-src 'self' data: blob: https://maps.googleapis.com https://maps.gstatic.com${preview ? " https://vercel.live https://vercel.com" : ""}`,
+  `img-src 'self' data: blob: https://maps.googleapis.com https://maps.gstatic.com https://tile.openstreetmap.org${preview ? " https://vercel.live https://vercel.com" : ""}`,
   `font-src 'self'${preview ? " https://vercel.live https://assets.vercel.com" : ""}`,
   `connect-src 'self'${development ? " ws: wss:" : ""}${preview ? " https://vercel.live wss://ws-us3.pusher.com" : ""}`,
   `frame-src ${preview ? "https://vercel.live" : "'none'"}`,
