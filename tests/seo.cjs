@@ -116,6 +116,18 @@ check("launch requires matching confirmed origin and explicit flags", () => {
 site.domain = savedDomain;
 site.decisions.analytics = savedAnalytics;
 const config = loadOrigin({});
+check("temporary images and unconfirmed service drafts are excluded from production", () => {
+  const reviewFile = require.resolve("../lib/review.ts");
+  const pagesFile = require.resolve("../content/services/pages.ts");
+  process.env.VERCEL_ENV = "production";
+  delete require.cache[reviewFile];
+  delete require.cache[pagesFile];
+  assert.equal(require(reviewFile).temporaryImagesEnabled, false);
+  assert(!require(pagesFile).servicePages.some((page) => page.slug === "private-deliveries"));
+  delete process.env.VERCEL_ENV;
+  delete require.cache[reviewFile];
+  delete require.cache[pagesFile];
+});
 const { seoPages } = require("../content/seo-pages.ts");
 const { servicePages } = require("../content/services/pages.ts");
 const { pageMetadata } = require("../lib/metadata.ts");
@@ -134,13 +146,7 @@ check("sitemap matches implemented routes and dynamically includes registered se
     paths,
   );
   for (const service of servicePages) assert(paths.includes(`/services/${service.slug}`));
-  for (const blocked of [
-    "/recent-jobs",
-    "/services/private-deliveries",
-    "/api/quote",
-    "/dev/components",
-  ])
-    assert(!paths.includes(blocked));
+  for (const blocked of ["/api/quote", "/dev/components"]) assert(!paths.includes(blocked));
   assert.deepEqual(robots(), { rules: { userAgent: "*", disallow: "/" } });
   for (const page of seoPages) {
     const meta = pageMetadata(page.path);
@@ -204,10 +210,17 @@ async function httpChecks() {
   const origin = process.env.SEO_TEST_ORIGIN || "http://127.0.0.1:3000";
   const titles = new Set();
   const summary = [];
+  const documents = new Map();
   for (const page of seoPages) {
     const response = await fetch(origin + page.path);
     assert.equal(response.status, 200, page.path);
     const html = await response.text();
+    documents.set(page.path, html);
+    assert.equal((html.match(/<h1(?:\s|>)/g) || []).length, 1, page.path + " has one H1");
+    assert.equal(response.headers.get("x-content-type-options"), "nosniff");
+    assert.equal(response.headers.get("x-frame-options"), "DENY");
+    assert.equal(response.headers.get("x-robots-tag"), "noindex, nofollow");
+    assert(response.headers.get("content-security-policy").includes("object-src 'none'"));
     const meta = (name) =>
       decode(
         html.match(new RegExp(`<meta (?:name|property)="${name}" content="([^"]*)"`))?.[1] || "",
@@ -252,9 +265,24 @@ async function httpChecks() {
       imageBytes: bytes.length,
     });
   }
+  for (const [path, html] of documents) {
+    for (const match of html.matchAll(/<a\s[^>]*href="([^"]+)"/g)) {
+      const url = new URL(decode(match[1]), origin + path);
+      if (url.origin !== origin) continue;
+      assert(documents.has(url.pathname), path + " links to missing page " + url.pathname);
+      if (url.hash) {
+        const id = decodeURIComponent(url.hash.slice(1));
+        assert(
+          documents.get(url.pathname).includes('id="' + id + '"'),
+          path + " missing anchor " + id,
+        );
+      }
+    }
+  }
   for (const route of ["/dev/components", "/missing-page"]) {
     const response = await fetch(origin + route);
     const html = await response.text();
+    if (route === "/missing-page") assert.equal(response.status, 404);
     assert(/noindex/.test(html));
   }
   const slash = await fetch(origin + "/services/", { redirect: "manual" });
@@ -262,13 +290,7 @@ async function httpChecks() {
   assert.equal(new URL(slash.headers.get("location"), origin).pathname, "/services");
   const sitemapText = await (await fetch(origin + "/sitemap.xml")).text();
   assert.equal((sitemapText.match(/<loc>/g) || []).length, seoPages.length);
-  assert(
-    !(
-      sitemapText.includes("/dev/") ||
-      sitemapText.includes("/api/") ||
-      sitemapText.includes("/recent-jobs")
-    ),
-  );
+  assert(!(sitemapText.includes("/dev/") || sitemapText.includes("/api/")));
   const robotsText = await (await fetch(origin + "/robots.txt")).text();
   assert(robotsText.includes("Disallow: /"));
   assert(!robotsText.includes("Allow: /"));

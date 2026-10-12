@@ -1,5 +1,16 @@
 # Staging build review
 
+## Latest review: final staging build
+
+The user has requested one complete review instead of further phase stops.
+See [Final review](final-review.md), [client sign-off list](client-sign-off-list.md)
+and [temporary imagery](temporary-images.md) for current status.
+All 17 planned layouts are now present on the review branch. Private Deliveries
+and Recent Jobs are labelled drafts, excluded from production. Four labelled
+generated images are authorised as temporary review examples.
+The historical phase notes below remain an audit trail, not current route counts.
+No human gate is marked passed and production launch remains blocked.
+
 ## Scope
 
 The review version is built on `staging/website`, starting from `6744b9e`.

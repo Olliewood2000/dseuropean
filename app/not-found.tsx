@@ -1,18 +1,27 @@
 import Link from "next/link";
 import { Section } from "@/components/layout/Section";
+import { site } from "@/content/site";
 
 export default function NotFound() {
   return (
     <Section background="inverse" padding="generous">
       <div className="space-y-6">
-        <p className="text-label font-bold uppercase text-accent-on-dark">Staging review</p>
-        <h1 className="text-display-md text-ink-inverse">Page not available</h1>
+        <h1 className="text-display-md text-ink-inverse">Page not found</h1>
         <p className="max-w-measure text-ink-inverse-muted">
-          This staging build contains the homepage, Services overview, furniture transport page and
-          component review. The remaining website pages will be added in later phases.
+          That page does not exist, or it has moved. Try the services page, or ring us on{" "}
+          {site.phone} and we will point you in the right direction.
         </p>
-        <Link href="/" className="inline-block text-accent-on-dark underline underline-offset-4">
-          Return to the homepage
+        <Link
+          href="/services"
+          className="inline-block text-accent-on-dark underline underline-offset-4"
+        >
+          See our services
+        </Link>
+        <Link
+          href="/quote"
+          className="ml-6 inline-block text-accent-on-dark underline underline-offset-4"
+        >
+          Get a quote
         </Link>
       </div>
     </Section>

@@ -3,6 +3,7 @@ import { Section } from "@/components/layout/Section";
 import { Card } from "@/components/primitives/Card";
 import { Icon } from "@/components/primitives/Icon";
 import { SectionHeading, type SectionHeadingProps } from "@/components/primitives/SectionHeading";
+import { ServiceShowcase } from "./ServiceShowcase";
 import { renderMedia, type Media } from "@/lib/media";
 import { blockTone, sectionOptions, type BlockProps } from "@/lib/blocks";
 export interface ServiceGridProps extends BlockProps {
@@ -16,20 +17,52 @@ export interface ServiceGridProps extends BlockProps {
   }[];
   columns?: 2 | 3;
   showImages?: boolean;
+  variant?: "cards" | "showcase";
 }
 export function ServiceGrid({
   heading,
   services,
   columns = 3,
   showImages = false,
+  variant = "cards",
   tone,
   section,
 }: ServiceGridProps) {
   const resolvedTone = blockTone(section, tone);
+  const iconTone = resolvedTone === "dark" ? "accent-on-dark" : "accent";
+  const headingNode = heading && <SectionHeading {...heading} tone={resolvedTone} />;
+  if (variant === "showcase") {
+    return (
+      <Section {...sectionOptions(section, tone)}>
+        <ServiceShowcase
+          heading={headingNode}
+          items={services.map((service) => ({
+            title: service.title,
+            excerpt: service.excerpt,
+            href: service.href,
+            icon: service.icon && <Icon icon={service.icon} tone={iconTone} />,
+            cardMedia:
+              service.image &&
+              renderMedia(service.image, {
+                aspect: "3/2",
+                sizes: "(max-width: 767px) calc(100vw - 40px), 50vw",
+              }),
+            stageMedia:
+              service.image &&
+              renderMedia(service.image, {
+                aspect: "1/1",
+                sizes: "(max-width: 1279px) 48vw, 640px",
+              }),
+          }))}
+          arrow={<Icon icon={ArrowRight} size={20} tone={iconTone} />}
+        />
+      </Section>
+    );
+  }
   return (
     <Section {...sectionOptions(section, tone)}>
       <div className="block-stack">
-        {heading && <SectionHeading {...heading} tone={resolvedTone} />}
+        {headingNode}
         <div
           className={`grid gap-4 md:grid-cols-2 lg:gap-6 ${columns === 3 ? "lg:grid-cols-3" : ""}`}
         >
@@ -45,21 +78,12 @@ export function ServiceGrid({
                       : "(max-width: 767px) calc(100vw - 40px), 600px",
                 })}
               <div className="card-body flex flex-1 flex-col gap-4">
-                {service.icon && (
-                  <Icon
-                    icon={service.icon}
-                    tone={resolvedTone === "dark" ? "accent-on-dark" : "accent"}
-                  />
-                )}
+                {service.icon && <Icon icon={service.icon} tone={iconTone} />}
                 <h3 className="text-h4">{service.title}</h3>
                 <p className="block-muted text-body-sm">{service.excerpt}</p>
                 <span className="arrow-link block-accent mt-auto pt-4">
                   View service
-                  <Icon
-                    icon={ArrowRight}
-                    size={20}
-                    tone={resolvedTone === "dark" ? "accent-on-dark" : "accent"}
-                  />
+                  <Icon icon={ArrowRight} size={20} tone={iconTone} />
                 </span>
               </div>
             </Card>

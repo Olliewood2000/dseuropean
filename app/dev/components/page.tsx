@@ -291,6 +291,16 @@ export default function ComponentReview() {
         showImages
         tone="dark"
       />
+      <ServiceGrid
+        heading={{
+          title: "Service showcase · hover or focus a row to change the image",
+          intro: "Ruled index with a sticky image stage from lg, image cards below.",
+        }}
+        services={reviewServices}
+        variant="showcase"
+        showImages
+        section={{ background: "subtle" }}
+      />
       <div id="split" className="sample-label">
         Image and text · Both ratios and directions, on light and dark backgrounds
       </div>

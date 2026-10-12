@@ -7,9 +7,11 @@ import {
   PackageCheck,
   Gem,
   Truck,
+  Warehouse,
   Wrench,
 } from "lucide-react";
 import type { HeroProps } from "@/components/blocks/Hero";
+import { isReviewBuild } from "@/lib/review";
 import type { TrustStripProps } from "@/components/blocks/TrustStrip";
 import type { ServiceGridProps } from "@/components/blocks/ServiceGrid";
 import type { SplitFeatureProps } from "@/components/blocks/SplitFeature";
@@ -17,12 +19,9 @@ import type { ProcessStepsProps } from "@/components/blocks/ProcessSteps";
 import type { FeatureBandProps } from "@/components/blocks/FeatureBand";
 import type { AudienceGridProps } from "@/components/blocks/AudienceGrid";
 import type { FleetStripProps } from "@/components/blocks/FleetStrip";
-import type { JobGridProps } from "@/components/blocks/JobGrid";
 import type { QuoteCTAProps } from "@/components/blocks/QuoteCTA";
-import { services } from "./services";
+import { services, serviceShowcaseImages } from "./services";
 import { fleet } from "./fleet";
-import { jobs } from "./jobs";
-
 // Verbatim copy and assembly from docs/pages/home.md.
 // Private Items and draft claims remain subject to client sign-off before launch.
 export const homeMeta = {
@@ -48,11 +47,52 @@ export const home = {
       label: "See our work",
       href: "/recent-jobs",
     },
-    image: {
-      aspect: "3/2",
-      brief:
-        "Two fitters in DS European branded polos positioning a large piece of furniture inside a finished interior. Shot from behind or side on, faces not required. Portrait or 3/2 crop, masked to the motif shape.",
-    },
+    // Dummy wording for layout review only. Hidden in production; replace with client-approved testimonials.
+    testimonials: isReviewBuild
+      ? [
+          {
+            quote:
+              "They collected from three makers, held everything until the site was ready and installed it in one visit. Nothing was left for us to chase.",
+            attribution: "PLACEHOLDER_CLIENT, Interior designer",
+          },
+          {
+            quote:
+              "The stand arrived on time, went up to the plan and came down again after the show. The team on the floor knew exactly what they were doing.",
+            attribution: "PLACEHOLDER_CLIENT, Exhibition contractor",
+          },
+          {
+            quote:
+              "We moved a whole floor over one weekend. Desks, meeting rooms and storage were back in place and working on Monday morning.",
+            attribution: "PLACEHOLDER_CLIENT, Office manager",
+          },
+        ]
+      : undefined,
+    backgroundImages: [
+      {
+        src: "/images/Ds_Hero_webps/Fleet_Vehicles_Hero_Image.webp",
+        alt: "Vans and box lorries parked in front of a warehouse.",
+      },
+      {
+        src: "/images/Ds_Hero_webps/Crane_Lifting_Hero_Image.webp",
+        alt: "Lorry mounted crane lifting a refrigerated container onto a trailer in an industrial yard.",
+      },
+      {
+        src: "/images/Ds_Hero_webps/Office_Desk_Hero_Image.webp",
+        alt: "Office desks and meeting chairs arranged in a U shape in a bright meeting room.",
+      },
+      {
+        src: "/images/Ds_Hero_webps/Exhibition_Set_Up_Hero.webp",
+        alt: "Two forklifts in an exhibition hall while stands are being set up.",
+      },
+      {
+        src: "/images/Ds_Hero_webps/Glass_pod_Hero_Image.webp",
+        alt: "Four people assembling a glass office pod inside a warehouse.",
+      },
+      {
+        src: "/images/Ds_Hero_webps/Blue_HGV_Hero_Image.webp",
+        alt: "Curtain sided lorry with its side curtain drawn back, showing the empty load bed.",
+      },
+    ],
     section: {
       id: "home-hero",
       background: "inverse",
@@ -97,9 +137,10 @@ export const home = {
       ...service,
       href: `/services/${service.slug}`,
       icon: serviceIcons[index],
+      image: { aspect: "1/1" as const, ...serviceShowcaseImages[index] },
     })),
-    columns: 3,
-    showImages: false,
+    variant: "showcase",
+    showImages: true,
     section: {
       id: "home-services",
       background: "subtle",
@@ -124,13 +165,25 @@ export const home = {
     cta: {
       label: "About DS European",
       href: "/about",
-      variant: "secondary",
+      variant: "primary-dark",
     },
-    media: {
-      aspect: "3/2",
-      brief:
-        "Close crop of gloved hands unwrapping a packing blanket from a piece of furniture. Detail shot rather than wide. This is the single most valuable photograph on the site and is easy to capture on a phone.",
-    },
+    media: [
+      {
+        src: "/images/Ds_Hero_webps/Crane_Lifting_Hero_Image.webp",
+        alt: "Lorry mounted crane lifting a refrigerated container onto a trailer in an industrial yard.",
+        aspect: "3/4",
+      },
+      {
+        src: "/images/Ds_Hero_webps/Glass_pod_Hero_Image.webp",
+        alt: "Four people assembling a glass office pod inside a warehouse.",
+        aspect: "4/3",
+      },
+      {
+        src: "/images/Ds_Hero_webps/Office_Desk_Hero_Image.webp",
+        alt: "Office desks and meeting chairs arranged in a U shape in a bright meeting room.",
+        aspect: "4/3",
+      },
+    ],
     ratio: "7/5",
     reverse: false,
     section: {
@@ -167,8 +220,9 @@ export const home = {
     tone: "light",
     section: {
       id: "home-process",
-      background: "subtle",
+      background: "surface",
       padding: "standard",
+      className: "section-continues section-globe",
     },
   } satisfies ProcessStepsProps,
   international: {
@@ -180,6 +234,22 @@ export const home = {
       label: "See our work",
       href: "/recent-jobs",
     },
+    media: [
+      {
+        src: "/images/What We Move Webps/Furniture.webp",
+        alt: "Living room with a striped rug, round side tables and a curved armchair beside a fireplace.",
+        position: "50% 30%",
+      },
+      {
+        src: "/images/What We Move Webps/One_off_Items.webp",
+        alt: "Green patterned chaise longue placed beside a fireplace.",
+        position: "50% 60%",
+      },
+      {
+        src: "/images/Our Clients WEBPs/Interior designers.webp",
+        alt: "Finished high-end interior design installation",
+      },
+    ],
     section: {
       id: "home-international",
       background: "inverse",
@@ -192,24 +262,46 @@ export const home = {
       eyebrow: "OUR CLIENTS",
       title: "Built around the way these businesses work",
       intro:
-        "The majority of our customers are repeat traders who use us across multiple projects a year.",
+        "The majority of our customers are repeat traders who use us across multiple projects a year. We provide flexible, reliable logistics that fit the way your business and projects run.",
     },
+    titleAccent: "these businesses work",
     audiences: [
       {
         title: "Interior designers",
         body: "Bespoke and specified pieces collected from makers, stored until the property is ready, then installed on site.",
+        image: {
+          src: "/images/Our Clients WEBPs/Interior designers.webp",
+          alt: "Finished high-end interior design installation",
+        },
+        benefit: "White-glove handling",
       },
       {
         title: "Event organisers",
         body: "Stands, builds and activation materials delivered to venue, set up to schedule and collected afterwards.",
+        image: {
+          src: "/images/Our Clients WEBPs/Event organisers.webp",
+          alt: "Professionally installed exhibition and event stand",
+        },
+        benefit: "Time-critical delivery",
       },
       {
         title: "Fit-out contractors",
-        body: "Programme led deliveries into live sites, with fitters who understand access, timings and site rules.",
+        body: "Programme led deliveries into live sites, with teams who understand access, timings and site rules.",
+        image: {
+          src: "/images/Our Clients WEBPs/Fit-out contractors.webp",
+          alt: "Commercial interior fit-out project under construction",
+        },
+        benefit: "Site-ready logistics",
       },
       {
         title: "Bespoke furnishers",
         body: "One-off and high value pieces handled by people who treat them the way you made them.",
+        image: {
+          src: "/images/Our Clients WEBPs/Bespoke furnishers.webp",
+          alt: "Close-up of high-end bespoke wooden furniture",
+          position: "30% 50%",
+        },
+        benefit: "Handled with care",
       },
     ],
     section: {
@@ -223,6 +315,7 @@ export const home = {
       eyebrow: "STORAGE AND FULFILMENT",
       title: "Somewhere to put it until the site is ready",
     },
+    icon: Warehouse,
     body: [
       "Projects slip. Sites are not always ready on the day the furniture is. Our warehouse means a job can be collected, consolidated, held and then delivered when it suits the programme, without passing through anyone else's hands.",
       "It is also what lets us take a scheme arriving from several suppliers, bring it together in one place, and deliver it to site as a single co-ordinated installation.",
@@ -230,50 +323,44 @@ export const home = {
     cta: {
       label: "Storage and fulfilment",
       href: "/storage",
-      variant: "secondary",
+      variant: "primary",
     },
     media: {
       aspect: "3/2",
       brief:
         "Wrapped and labelled goods on racking inside the warehouse. Clean, well lit, no clutter in frame.",
     },
+    backdrop: {
+      src: "/images/Ds_Hero_webps/DS_Storage.webp",
+      alt: "Wrapped goods on racking inside the warehouse.",
+    },
     ratio: "5/7",
     reverse: true,
     section: {
       id: "home-storage",
       background: "subtle",
-      padding: "standard",
+      padding: "compact",
     },
   } satisfies SplitFeatureProps,
   fleet: {
     heading: {
+      eyebrow: "OUR VEHICLES",
       title: "The right vehicle for the item",
+      intro:
+        "From single items to full loads, our modern fleet and specialist vehicles ensure your goods are moved safely and efficiently.",
     },
+    titleAccent: "for the item",
     vehicles: fleet,
+    media: {
+      src: "/images/Ds_Hero_webps/Fleet_Vehicles_Hero_Image.webp",
+      alt: "Vans and box lorries parked in front of a warehouse.",
+    },
     section: {
       id: "home-fleet",
       background: "surface",
       padding: "compact",
     },
   } satisfies FleetStripProps,
-  jobs: {
-    heading: {
-      eyebrow: "RECENT WORK",
-      title: "A few of the jobs we have run",
-      action: {
-        label: "All recent work",
-        href: "/recent-jobs",
-      },
-    },
-    jobs: jobs,
-    variant: "narrative",
-    columns: 3,
-    section: {
-      id: "home-jobs",
-      background: "subtle",
-      padding: "standard",
-    },
-  } satisfies JobGridProps,
   quote: {
     title: "Tell us what needs moving",
     body: "Send us the item, the collection point and the destination and we will come back with a price. Same day work considered, projects typically booked around three weeks ahead.",
@@ -286,7 +373,7 @@ export const home = {
       id: "home-quote",
       background: "inverse",
       padding: "generous",
-      cut: "top",
+      cut: "none",
     },
   } satisfies QuoteCTAProps,
 };

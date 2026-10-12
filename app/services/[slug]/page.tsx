@@ -39,6 +39,11 @@ export default async function ServicePageRoute({ params }: PageProps<"/services/
     cta.href === "/quote" ? { ...cta, href: quoteHref } : cta;
   return (
     <>
+      {slug === "private-deliveries" && (
+        <aside className="bg-surface-subtle px-6 py-4 text-center text-body-sm text-ink">
+          Review draft: private deliveries and the service details below still need confirmation.
+        </aside>
+      )}
       <JsonLd
         data={serviceSchema(`/services/${slug}`, service.hero.title, service.meta.description)}
       />

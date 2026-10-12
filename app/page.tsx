@@ -8,7 +8,6 @@ import { ProcessSteps } from "@/components/blocks/ProcessSteps";
 import { FeatureBand } from "@/components/blocks/FeatureBand";
 import { AudienceGrid } from "@/components/blocks/AudienceGrid";
 import { FleetStrip } from "@/components/blocks/FleetStrip";
-import { JobGrid } from "@/components/blocks/JobGrid";
 import { QuoteCTA } from "@/components/blocks/QuoteCTA";
 import { home } from "@/content/home";
 
@@ -26,7 +25,6 @@ export default function HomePage() {
       <AudienceGrid {...home.audiences} />
       <SplitFeature {...home.storage} />
       <FleetStrip {...home.fleet} />
-      <JobGrid {...home.jobs} />
       <QuoteCTA {...home.quote} />
     </>
   );

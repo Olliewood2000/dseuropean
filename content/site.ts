@@ -16,6 +16,8 @@ export const site = {
     region: "Kent",
     postcode: "TN27 0JS",
     country: "GB",
+    // ONS postcode centroid for TN27 0JS, via postcodes.io.
+    geo: { latitude: 51.213471, longitude: 0.78755 },
   },
   hours: "24 hours a day, 365 days a year",
   hoursShort: "24/7, 365",

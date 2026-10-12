@@ -16,7 +16,7 @@ import type { ProcessStepsProps } from "@/components/blocks/ProcessSteps";
 import type { TwoColumnTextProps } from "@/components/blocks/TwoColumnText";
 import type { FAQProps } from "@/components/blocks/FAQ";
 import type { QuoteCTAProps } from "@/components/blocks/QuoteCTA";
-import { services } from "./services";
+import { services, serviceShowcaseImages } from "./services";
 // Supplied copy from docs/pages/services-hub.md. The unresolved private-work FAQ is omitted pending confirmation.
 export const servicesHubMeta = {
   title: "Our Services: Transport, Installation & Storage | DS European",
@@ -24,15 +24,6 @@ export const servicesHubMeta = {
     "Specialist transport with on site installation and storage behind it. Furniture, exhibitions, retail displays, office relocations, equipment and scheduled deliveries.",
 };
 const serviceIcons = [Armchair, Store, Presentation, Building2, Cog, PackageCheck, Gem];
-const imageBriefs = [
-  "A wrapped piece being carried into a finished interior",
-  "A pop-up unit part assembled in an empty retail space",
-  "Flight cases on a venue floor during build up",
-  "Desks being reassembled in a new office",
-  "A Moffett unloading a crated machine",
-  "A branded vehicle at a loading bay",
-  "A single blanket wrapped item entering a home",
-];
 export const servicesHub = {
   hero: {
     variant: "page",
@@ -69,7 +60,7 @@ export const servicesHub = {
       ...service,
       href: `/services/${service.slug}`,
       icon: serviceIcons[index],
-      image: { aspect: "3/2" as const, brief: imageBriefs[index] },
+      image: { aspect: "3/2" as const, ...serviceShowcaseImages[index] },
     })),
     columns: 3,
     showImages: true,
